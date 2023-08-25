@@ -1,0 +1,48 @@
+{
+    "devices": [
+        {
+            "address" : "XXXXXXXXXXXX",
+            "name" : "XXXXXXXX",
+            "manufacturer" : "Me",
+            "model" : "XBeeSensor",
+            "identifiers": [],
+            "channels" : [
+                {
+                    "name" : "XXXXXXXX",
+                    "io_line" : "XXXXX",
+                    "type" : "BinaryAnalogSensor",
+                    "state_topic" : "",
+                    "unique_id" : "",
+                    "type_attributes" :
+                        {
+                            "threshold": 123,
+                            "payload_on": "True",
+                            "payload_off" : "False",
+                            "greater_than_value": "True"
+                        }
+                },
+                {
+                    "name" : "XXXXXXXX",
+                    "io_line" : "XXXXX",
+                    "type" : "DigitalSensor",
+                    "state_topic" : "",
+                    "unique_id" : "",
+                    "type_attributes" :
+                        {
+                            "payload_on": "True",
+                            "payload_off" : "False"
+                        }
+                },
+                {
+                    "name" : "XXXXXXXX",
+                    "io_line" : "XXXXX",
+                    "type" : "AnalogSensor",
+                    "state_topic" : "",
+                    "unique_id" : ""
+                }
+
+            ]
+        }
+    ]
+         
+}
