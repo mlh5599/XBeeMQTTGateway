@@ -7,12 +7,11 @@ import time
 import sys
 
 
-def Initialize(device_port, device_baud_rate, io_sample_received_callback, reset_pin, attempt_num=0):
+def Initialize(device_port, device_baud_rate, io_sample_received_callback, reset_pin, pi, attempt_num=0):
 
     try:
         attempt_num+=1
         if reset_pin >= 0:
-            pi = pigpio.pi()
             
             #Ensure UART is in the correct mode
             pi.set_mode(14, pigpio.ALT0)
@@ -45,7 +44,7 @@ def Initialize(device_port, device_baud_rate, io_sample_received_callback, reset
     except:
         if attempt_num < 5:
             print("Unable to connect to xbee, trying again")
-            Initialize(device_port, device_baud_rate, io_sample_received_callback, reset_pin, attempt_num)
+            Initialize(device_port, device_baud_rate, io_sample_received_callback, reset_pin, pi, attempt_num)
 
         print("An error occurred while trying to connect")
         sys.exit(5)

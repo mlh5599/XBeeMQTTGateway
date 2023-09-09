@@ -68,8 +68,10 @@ def main():
 
     handler = SIGINT_handler()
     signal.signal(signal.SIGINT, handler.signal_handler)
+    
+    pi = pigpio.pi()
 
-    LocalZigbeeDevice.Initialize(app_config["DevicePort"], app_config["DeviceBaudRate"], io_sample_received_callback, app_config["XBeeResetPin"])
+    LocalZigbeeDevice.Initialize(app_config["DevicePort"], app_config["DeviceBaudRate"], io_sample_received_callback, app_config["XBeeResetPin"], pi)
     
     MQTTHelper.connect(app_config["MQTTBroker"], int(app_config["MQTTPort"]))
 
