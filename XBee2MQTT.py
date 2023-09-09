@@ -13,15 +13,6 @@ import json
 import io
 import pigpio
 
-app_config = {
-    "DevicePort" : "COM6",
-    "DeviceBaudRate" : "9600",
-    "MQTTBroker" : "MQTT.HagueHome.lan",
-    "MQTTPort" : "1883",
-    "XBeeResetPin" : -1,
-    "StatusLightPin" : -1
-}
-
 device_config = {}
 def io_sample_received_callback(io_sample : IOSample, remote_xbee : RemoteXBeeDevice, send_time):
     print("Callback received")
@@ -36,35 +27,37 @@ def io_sample_received_callback(io_sample : IOSample, remote_xbee : RemoteXBeeDe
     device.ProcessIncommingIOSample(io_sample)
 
 
-def main():
-# try::
+def load_config(config_path):
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'c:d:r:m:p:x:l:', ["config=","device-port=","device-baud-rate=","mqtt-broker=","mqtt-broker-port=","xbee-reset-pin=","status-led-pin="])
-    except getopt.GetoptError:
-        print('Xbee2MQTT.py -c <config-path> -d <port> -r <device baud rate> -m <mqtt-broker> -p <mqtt-broker-port> -x <xbee-reset-pin> -l <status-led-pin>' )
+        with open(config_path, 'r') as config_file:
+            return json.load(config_file)
+    except FileNotFoundError:
+        print(f"Config file '{config_path}' not found.")
+        sys.exit(2)
+    except Exception as ex:
+        print(f"Error loading config from '{config_path}': {ex}")
         sys.exit(2)
 
-    config_path = ""
+# Load the app_config from the config file
+config_path = ""
+app_config = {}
+
+def main():
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'c:', ["config="])
+    except getopt.GetoptError:
+        print('Xbee2MQTT.py -c <config-path>')
+        sys.exit(2)
 
     for opt, arg in opts:
-        if opt in ("-d", "--port"):
-            app_config["DevicePort"] = arg
-        elif opt in ("-r", "--devict_baud_rate"):
-            app_config["DeviceBaudRate"] = arg
-        elif opt in ("-m", "--mqtt-broker"):
-            app_config["MQTTBroker"] = arg
-        elif opt in ("-p", "--mqtt-broker-port"):
-            app_config["MQTTPort"] = arg
-        elif opt in ("-c", "--config"):
+        if opt in ("-c", "--config"):
             config_path = arg
-        elif opt in ("-x", "--xbee-reset-pin"):
-            app_config["XBeeResetPin"] = int(arg)
-        elif opt in ("-l", "--status-led-pin"):
-            app_config["StatusLightPin"] = int(arg)
 
     if config_path == "":
         print("Config path is required")
         sys.exit(2)
+
+    app_config = load_config(config_path)  # Load the config from the JSON file
 
     handler = SIGINT_handler()
     signal.signal(signal.SIGINT, handler.signal_handler)
