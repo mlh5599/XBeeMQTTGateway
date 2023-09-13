@@ -6,8 +6,6 @@ import time
 
 def perform_auto_discovery(remote_xbee_device : RemoteIOSensorDevice):
 
-    # master_bathroom_topic = f"homeassistant/binary_sensor/xbee-0x{remote_xbee_device.remote_address}/masterbathroomshower/config"
-
     for channel in remote_xbee_device.adc_channels:
         device_channel = remote_xbee_device.adc_channels.get(channel)
         xbee_address = remote_xbee_device.remote_address
@@ -16,7 +14,7 @@ def perform_auto_discovery(remote_xbee_device : RemoteIOSensorDevice):
                 "identifiers": [
                     f"zigbee2mqtt_0x{remote_xbee_device.remote_address}"
                 ],
-                "manufacturer": "Me",
+                "manufacturer": "RobotMikeIndustries",
                 "model": "XBee Sensor",
                 "name": remote_xbee_device.name
             },
@@ -43,7 +41,7 @@ def perform_auto_discovery(remote_xbee_device : RemoteIOSensorDevice):
                 "identifiers": [
                     f"zigbee2mqtt_0x{remote_xbee_device.remote_address}"
                 ],
-                "manufacturer": "Me",
+                "manufacturer": "RobotMikeIndustries",
                 "model": "XBee Sensor",
                 "name": remote_xbee_device.name
             },
