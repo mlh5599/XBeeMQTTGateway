@@ -32,13 +32,6 @@ def Initialize(device_port, device_baud_rate, io_sample_received_callback, reset
         address = device.get_64bit_addr()
         print("Device open, address = %s" %address)
 
-        def data_receive_callback(xbee_message):
-            print("Callback received")
-            device = XBeeDeviceManager.registered_devices["0013A20040D2A1AC"]
-            MQTTHelper.client.publish("myhome/sensors" + device.remote_address.address, "Test Callback")
-
-        device.add_data_received_callback(data_receive_callback)
-
         device.add_io_sample_received_callback(io_sample_received_callback)
 
     except:
