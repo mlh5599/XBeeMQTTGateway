@@ -1,0 +1,8 @@
+{
+    "DevicePort": "/dev/ttyAMA0",
+    "DeviceBaudRate": "9600",
+    "MQTTBroker": "MQTT.HagueHome.lan",
+    "MQTTPort": "1883",
+    "XBeeResetPin": 27,
+    "StatusLightPin": 24
+}
