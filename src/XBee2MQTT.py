@@ -12,6 +12,7 @@ from digi.xbee.io import IOSample
 import json
 import io
 import pigpio
+from ConfigurationManager import load_config
 
 device_config = {}
 def io_sample_received_callback(io_sample : IOSample, remote_xbee : RemoteXBeeDevice, send_time):
@@ -26,19 +27,6 @@ def io_sample_received_callback(io_sample : IOSample, remote_xbee : RemoteXBeeDe
 
     device.ProcessIncommingIOSample(io_sample)
 
-
-def load_config(config_path):
-    try:
-        with open(config_path, 'r') as config_file:
-            return json.load(config_file)
-    except FileNotFoundError:
-        print(f"Config file '{config_path}' not found.")
-        sys.exit(2)
-    except Exception as ex:
-        print(f"Error loading config from '{config_path}': {ex}")
-        sys.exit(2)
-
-# Load the app_config from the config file
 config_path = ""
 app_config = {}
 
@@ -57,7 +45,11 @@ def main():
         print("Config path is required")
         sys.exit(2)
 
-    app_config = load_config(config_path)  # Load the config from the JSON file
+    try:
+        app_config = load_config(config_path)
+    except Exception as ex:
+        print(ex)
+        sys.exit(2)
 
     handler = SIGINT_handler()
     signal.signal(signal.SIGINT, handler.signal_handler)
