@@ -5,9 +5,11 @@ import XBeeDeviceManager
 import pigpio
 import time
 import sys
+from digi.xbee.io import IOSample
+from digi.xbee.devices import RemoteXBeeDevice
 
 
-def Initialize(device_port, device_baud_rate, io_sample_received_callback, reset_pin, pi, attempt_num=0):
+def Initialize(device_port, device_baud_rate, reset_pin, pi, attempt_num=0):
 
     try:
         attempt_num+=1
@@ -40,4 +42,17 @@ def Initialize(device_port, device_baud_rate, io_sample_received_callback, reset
             Initialize(device_port, device_baud_rate, io_sample_received_callback, reset_pin, pi, attempt_num)
 
         print("An error occurred while trying to connect")
-        sys.exit(5)
+        
+
+
+def io_sample_received_callback(io_sample : IOSample, remote_xbee : RemoteXBeeDevice, send_time):
+    print("Callback received")
+    print("Calling Device = %s" % remote_xbee.get_64bit_addr())
+
+    device = XBeeDeviceManager.GetRegisteredDevice(str(remote_xbee.get_64bit_addr()))
+    
+    if device == None:
+
+        device = XBeeDeviceManager.RegisterDevice(io_sample, remote_xbee)
+
+    device.ProcessIncommingIOSample(io_sample)
