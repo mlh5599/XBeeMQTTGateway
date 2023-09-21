@@ -9,22 +9,21 @@ import json
 from os.path import exists
 
 class XBeeDeviceManager():
+    
+    def __init__(self):
 
-    __registered_devices = {}
+        self.registered_devices = {}
 
-    def __init__(self, config):
-        pass
-
-    def LoadRegisteredDevices(self, config_path):
-        self.config_path = config_path
-        if exists(config_path):
-            with open(config_path, 'r') as openfile:
-                self.device_config_json = json.load(openfile)
-        else:
-            self.device_config_json = ""
+        # def LoadRegisteredDevices(self, config_path):
+        #     self.config_path = config_path
+        #     if exists(config_path):
+        #         with open(config_path, 'r') as openfile:
+        #             self.device_config_json = json.load(openfile)
+        #     else:
+        #         self.device_config_json = ""
 
 
-    def RegisterDevice(io_sample : IOSample, remote_xbee : RemoteXBeeDevice):
+    def RegisterDevice(self, io_sample : IOSample, remote_xbee : RemoteXBeeDevice):
         
         
         channels = {}
@@ -41,13 +40,13 @@ class XBeeDeviceManager():
         device = RemoteIOSensorDevice(remote_xbee.get_node_id(), str(remote_xbee.get_64bit_addr()), channels)
 
         print(f"Registering remote device.  Address={device.remote_address}, Name={remote_xbee.get_node_id()}")
-        XBeeDeviceManager.__registered_devices[device.remote_address] = device
-        print(f"Current registered devices: {XBeeDeviceManager.__registered_devices}")
+        self.registered_devices[device.remote_address] = device
+        print(f"Current registered devices: {self.registered_devices}")
         perform_auto_discovery(device)
 
         return device
 
-    def GetRegisteredDevice(address):
-        device = XBeeDeviceManager.__registered_devices.get(address)
+    def GetRegisteredDevice(self, address):
+        device = self.registered_devices.get(address)
         print(f"Existing device lookup complete, found: {device}")
         return device
