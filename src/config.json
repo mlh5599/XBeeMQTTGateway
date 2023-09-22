@@ -1,8 +1,8 @@
 {
-    "DevicePort": "/dev/ttyAMA0",
-    "DeviceBaudRate": "9600",
-    "MQTTBroker": "MQTT.HagueHome.lan",
-    "MQTTPort": "1883",
-    "XBeeResetPin": 27,
-    "StatusLightPin": 24
+    "device_port": "/dev/ttyAMA0",
+    "device_baud_rate": "9600",
+    "mqtt_broker": "MQTT.HagueHome.lan",
+    "mqtt_port": "1883",
+    "xbee_reset_pin": 27,
+    "status_light_pin": 24
 }
