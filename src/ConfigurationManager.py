@@ -8,8 +8,11 @@ class ConfigurationManager:
 
     def load_config(self):
         try:
+            print(f"Loading config from '{self.config_path}'")
             with open(self.config_path, 'r') as config_file:
                 self.app_config = json.load(config_file)
+            print(f"Config loaded: {self.app_config}")
+
 
         except FileNotFoundError:
             print(f"Config file '{self.config_path}' not found.")
@@ -40,10 +43,8 @@ class ConfigurationManager:
         return self.get_config()["status_light_pin"]
     
     device_port = property(get_device_port)
-    device_baudRate = property(get_device_baud_rate)
+    device_baud_rate = property(get_device_baud_rate)
     mqtt_broker = property(get_mqtt_broker)
     mqtt_port = property(get_mqtt_port)
     xbee_reset_pin = property(get_xbee_reset_pin)
     status_light_pin = property(get_status_light_pin)
-
-    

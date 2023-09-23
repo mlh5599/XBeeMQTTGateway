@@ -27,7 +27,7 @@ def test_load_config_success(tmp_path):
     assert result == config_data
 
     assert cm.device_port == config_data["device_port"]
-    assert cm.device_baudRate == config_data["device_baud_rate"]
+    assert cm.device_baud_rate == config_data["device_baud_rate"]
     assert cm.mqtt_broker == config_data["mqtt_broker"]
     assert cm.mqtt_port == config_data["mqtt_port"] 
     assert cm.xbee_reset_pin == config_data["xbee_reset_pin"]

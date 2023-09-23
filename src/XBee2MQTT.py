@@ -31,6 +31,8 @@ def main():
         for opt, arg in opts:
             if opt in ("-c", "--config"):
                 config_path = arg
+        
+        print(f'Config path = {config_path}')
 
         if config_path == "":
             print("Config path is required")
@@ -45,27 +47,32 @@ def main():
             exit_code = 2
             raise
 
+        print("Registering SIGINT handler")
         handler = SIGINT_handler()
         signal.signal(signal.SIGINT, handler.signal_handler)
         
+        print("Initializing pigpio")
         pi = pigpio.pi()
 
-        LocalZigbeeDevice.Initialize(app_config["DevicePort"], app_config["DeviceBaudRate"], app_config["XBeeResetPin"], pi)
+        print("Initializing Zigbee device")
+        LocalZigbeeDevice.Initialize(cm, pi)
         
-        MQTTHelper.connect(app_config["MQTTBroker"], int(app_config["MQTTPort"]))
+        print("Connecting to MQTT broker")
+        MQTTHelper.connect(cm.mqtt_broker, int(cm.mqtt_port))
 
-        status_pin = app_config["StatusLightPin"]
+        print("Initializing status light")
+        status_pin = cm.status_light_pin
         if status_pin >= 0:
             pi.set_mode(status_pin, pigpio.OUTPUT)
             pi.write(status_pin, pigpio.HIGH)
 
-        XBeeDeviceManager(config_path)
+        #XBeeDeviceManager(config_path)
         
-        while True:
-            if handler.SIGINT:
-                MQTTHelper.client.loop_stop()
-                break
-            time.sleep(0.1)
+        #while True:
+        #    if handler.SIGINT:
+        #        MQTTHelper.client.loop_stop()
+        #        break
+        #    time.sleep(0.1)
 
     except Exception as ex:
         print(ex)

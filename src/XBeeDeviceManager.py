@@ -15,13 +15,13 @@ class XBeeDeviceManager():
     # def __init__(self):
 
 
-        # def LoadRegisteredDevices(self, config_path):
-        #     self.config_path = config_path
-        #     if exists(config_path):
-        #         with open(config_path, 'r') as openfile:
-        #             self.device_config_json = json.load(openfile)
-        #     else:
-        #         self.device_config_json = ""
+    #     def LoadRegisteredDevices(self, configuration_manager):
+    #         self.cm = configuration_manager
+    #         if exists(config_path):
+    #             with open(config_path, 'r') as openfile:
+    #                 self.device_config_json = json.load(openfile)
+    #         else:
+    #             self.device_config_json = ""
 
 
     def RegisterDevice(io_sample : IOSample, remote_xbee : RemoteXBeeDevice):
