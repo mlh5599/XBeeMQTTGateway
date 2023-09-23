@@ -19,8 +19,7 @@ def Initialize(configuration_manager, pi, attempt_num=0):
         print("Begin session on port %s" % configuration_manager.app_config["device_port"])
         print("Baud rate %s" % configuration_manager.device_baud_rate)
 
-        device = XBeeDevice(configuration_manager.device_port, configuration_manager.device_baud_ra
-te)
+        device = XBeeDevice(configuration_manager.device_port, configuration_manager.device_baud_rate)
         device.open()
         address = device.get_64bit_addr()
         print("Device open, address = %s" %address)
