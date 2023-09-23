@@ -21,7 +21,14 @@ sudo raspi-setup
     -> Disable login shell through serial
     -> Enable serial hardware
 
-### Add user to dialout
 sudo usermod -aG dialout <username>
 sudo usermod -aG tty <username>
   
+## Wiring
+### Rasperry Pi Model 1B
+
+Schematic
+![Screenshot](/Schematics/SchematicScreenshot)
+
+Breadboard Layout
+![Screenshot](/Schematics/BreadboardScreenshot)
