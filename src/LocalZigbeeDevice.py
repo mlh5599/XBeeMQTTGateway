@@ -3,14 +3,15 @@ import XBeeDeviceManager
 from digi.xbee.io import IOSample
 from digi.xbee.devices import RemoteXBeeDevice
 import logging
-# from RaspberryPiFunctions import ResetXBee
+from RaspberryPiFunctions import ResetXBee
 
 def Initialize(configuration_manager, attempt_num=0):
 
     try:
         attempt_num+=1
         logging.debug(f'Initializing Zigbee device - attempt {attempt_num}')
-        # ResetXBee(configuration_manager)
+        
+        ResetXBee(configuration_manager)
 
         logging.debug("Begin session on port %s" % configuration_manager.app_config["device_port"])
         logging.debug("Baud rate %s" % configuration_manager.device_baud_rate)
