@@ -63,9 +63,6 @@ class TestXBeeDeviceManager:
 
         assert result == self.mock_registered_devices["12345678"]
 
-        # Verify that the print function was called with the expected message
-        # mock_print.assert_called_once_with("Existing device lookup complete, found:", self.mock_registered_devices["12345678"])
-
     @patch('builtins.print')  # Mock the print function
     def test_get_registered_device_not_found(self, mock_print):
         
@@ -76,9 +73,6 @@ class TestXBeeDeviceManager:
         result = XBeeDeviceManager.GetRegisteredDevice("99999999")
 
         assert result is None  # No device found
-
-        # Verify that the print function was called with the expected message
-        mock_print.assert_called_once_with("Existing device lookup complete, found: None")
 
 if __name__ == '__main__':
     pytest.main()

@@ -1,4 +1,5 @@
 import json
+import logging
 
 class ConfigurationManager:
     def __init__(self, config_path):
@@ -8,17 +9,17 @@ class ConfigurationManager:
 
     def load_config(self):
         try:
-            print(f"Loading config from '{self.config_path}'")
+            logging.debug(f"Loading config from '{self.config_path}'")
             with open(self.config_path, 'r') as config_file:
                 self.app_config = json.load(config_file)
-            print(f"Config loaded: {self.app_config}")
+            logging.debug(f"Config loaded: {self.app_config}")
 
 
         except FileNotFoundError:
-            print(f"Config file '{self.config_path}' not found.")
+            logging.error(f"Config file '{self.config_path}' not found.")
             raise
         except Exception as ex:
-            print(f"Error loading config from '{self.config_path}': {ex}")
+            logging.error(f"Error loading config from '{self.config_path}': {ex}")
             raise
     
     def get_config(self):
@@ -42,9 +43,13 @@ class ConfigurationManager:
     def get_status_light_pin(self):
         return self.get_config()["status_light_pin"]
     
+    def get_log_level(self):
+        return self.get_config()["log_level"]
+    
     device_port = property(get_device_port)
     device_baud_rate = property(get_device_baud_rate)
     mqtt_broker = property(get_mqtt_broker)
     mqtt_port = property(get_mqtt_port)
     xbee_reset_pin = property(get_xbee_reset_pin)
     status_light_pin = property(get_status_light_pin)
+    log_level = property(get_log_level)

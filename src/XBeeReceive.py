@@ -1,7 +1,7 @@
 from digi.xbee.models.address import XBee64BitAddress
 from digi.xbee.devices import RemoteXBeeDevice
 from digi.xbee.io import IOSample, IOLine
-
+import logging
 
 class XBeeReceiveBase():
     
@@ -17,7 +17,7 @@ class XBeeIOSampleReceive(XBeeReceiveBase):
     def get_mqtt_topic(self, base_topic):
         remote_address = self.remote_device.get_64bit_addr()
         full_topic = f"{base_topic}/test/{remote_address}"
-        print(full_topic)
+        logging.debug(full_topic)
         return full_topic
 
     def get_mqtt_payload(self):
@@ -43,6 +43,6 @@ class XBeeIOSampleReceive(XBeeReceiveBase):
             value_string = f"{value_string}]"
         
         value_string = f"{value_string} }}"
-        print(value_string)
+        logging.debug(value_string)
 
 
