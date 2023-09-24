@@ -57,7 +57,7 @@ def main():
         signal.signal(signal.SIGINT, handler.signal_handler)
 
         logging.debug("Initializing Zigbee device")
-        LocalZigbeeDevice.Initialize(cm, pi)
+        LocalZigbeeDevice.Initialize(cm)
         
         logging.debug("Connecting to MQTT broker")
         MQTTHelper.connect(cm.mqtt_broker, int(cm.mqtt_port))
