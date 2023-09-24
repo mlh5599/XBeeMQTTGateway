@@ -8,6 +8,7 @@ def test_load_config_success(tmp_path):
     config_data = {
     "device_port": "test1",
     "device_baud_rate": "test2",
+    "coordinator_pan_id": "0x1234",
     "mqtt_broker": "test3",
     "mqtt_port": "test4",
     "xbee_reset_pin": 1,
@@ -21,13 +22,14 @@ def test_load_config_success(tmp_path):
     cm = ConfigurationManager(config_path)
     cm.load_config()
     # Load the config and assert the result
-    result = cm.get_config()
+    result = cm.app_config
     print(result)
     print(config_data)
     assert result == config_data
 
     assert cm.device_port == config_data["device_port"]
     assert cm.device_baud_rate == config_data["device_baud_rate"]
+    assert cm.coordinator_pan_id == config_data["coordinator_pan_id"]
     assert cm.mqtt_broker == config_data["mqtt_broker"]
     assert cm.mqtt_port == config_data["mqtt_port"] 
     assert cm.xbee_reset_pin == config_data["xbee_reset_pin"]

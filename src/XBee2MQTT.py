@@ -11,7 +11,6 @@ import logging
 
 import json
 import io
-import pigpio
 from ConfigurationManager import ConfigurationManager
 
 device_config = {}
@@ -56,21 +55,12 @@ def main():
         logging.debug("Registering SIGINT handler")
         handler = SIGINT_handler()
         signal.signal(signal.SIGINT, handler.signal_handler)
-        
-        logging.debug("Initializing pigpio")
-        pi = pigpio.pi()
 
         logging.debug("Initializing Zigbee device")
         LocalZigbeeDevice.Initialize(cm, pi)
         
         logging.debug("Connecting to MQTT broker")
         MQTTHelper.connect(cm.mqtt_broker, int(cm.mqtt_port))
-
-        logging.debug("Initializing status light")
-        status_pin = cm.status_light_pin
-        if status_pin >= 0:
-            pi.set_mode(status_pin, pigpio.OUTPUT)
-            pi.write(status_pin, pigpio.HIGH)
 
         #XBeeDeviceManager(config_path)
         
