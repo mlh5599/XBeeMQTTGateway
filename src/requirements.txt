@@ -2,3 +2,4 @@ pytest
 flake8
 paho-mqtt
 digi-xbee
+pigpio

@@ -22,34 +22,66 @@ class ConfigurationManager:
             logging.error(f"Error loading config from '{self.config_path}': {ex}")
             raise
     
-    def get_config(self):
-        return self.app_config
+    # def get_config(self):
+    #     return self.app_config
     
-    def get_device_port(self):
-        return self.get_config()["device_port"]
+    @property
+    def device_port(self):
+        return self.app_config["device_port"]
     
-    def get_device_baud_rate(self):
-        return self.get_config()["device_baud_rate"]
+    @property
+    def device_baud_rate(self):
+        return self.app_config["device_baud_rate"]
     
-    def get_mqtt_broker(self):
-        return self.get_config()["mqtt_broker"]
+    @property
+    def coordinator_pan_id(self):
+        return self.app_config["coordinator_pan_id"]
     
-    def get_mqtt_port(self):
-        return self.get_config()["mqtt_port"]
-        
-    def get_xbee_reset_pin(self):
-        return self.get_config()["xbee_reset_pin"]
+    @property
+    def coordinator_scan_channels(self):
+        return self.app_config["coordinator_scan_channels"]
     
-    def get_status_light_pin(self):
-        return self.get_config()["status_light_pin"]
+    @property
+    def coordinator_node_join_time(self):
+        return self.app_config["coordinator_node_join_time"]
     
-    def get_log_level(self):
-        return self.get_config()["log_level"]
+    @property
+    def coordinator_node_identifier(self):
+        return self.app_config["coordinator_node_identifier"]
     
-    device_port = property(get_device_port)
-    device_baud_rate = property(get_device_baud_rate)
-    mqtt_broker = property(get_mqtt_broker)
-    mqtt_port = property(get_mqtt_port)
-    xbee_reset_pin = property(get_xbee_reset_pin)
-    status_light_pin = property(get_status_light_pin)
-    log_level = property(get_log_level)
+    @property
+    def coordinator_encryption_enable(self):
+        return self.app_config["coordinator_encryption_enable"]
+    
+    @property
+    def coordinator_encryption_options(self):
+        return self.app_config["coordinator_encryption_options"]
+    
+    @property
+    def coordinator_encryption_key(self):
+        return self.app_config["coordinator_encryption_key"]
+    
+    @property
+    def coordinator_network_encryption_key(self):
+        return self.app_config["coordinator_network_encryption_key"]
+    
+    @property
+    def mqtt_broker(self):
+        return self.app_config["mqtt_broker"]
+    
+    @property
+    def mqtt_port(self):
+        return self.app_config["mqtt_port"] 
+    
+    @property
+    def xbee_reset_pin(self):
+        return self.app_config["xbee_reset_pin"]
+    
+    @property
+    def status_light_pin(self):
+        return self.app_config["status_light_pin"]
+    
+    @property
+    def log_level(self):
+        return self.app_config["log_level"]
+    
