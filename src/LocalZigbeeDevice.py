@@ -3,7 +3,7 @@ import XBeeDeviceManager
 from digi.xbee.io import IOSample
 from digi.xbee.devices import RemoteXBeeDevice
 import logging
-# from RaspberryPiFunctions import ResetXBee
+from RaspberryPiFunctions import ResetXBee
 
 def Initialize(configuration_manager, attempt_num=0):
 
@@ -11,7 +11,7 @@ def Initialize(configuration_manager, attempt_num=0):
         attempt_num+=1
         logging.debug(f'Initializing Zigbee device - attempt {attempt_num}')
         
-        # ResetXBee(configuration_manager)
+        ResetXBee(configuration_manager)
 
         logging.debug("Begin session on port %s" % configuration_manager.app_config["device_port"])
         logging.debug("Baud rate %s" % configuration_manager.device_baud_rate)
@@ -35,8 +35,9 @@ def Initialize(configuration_manager, attempt_num=0):
             logging.error("Connecting to xbee failed.  Exiting.")
             raise
 
-def ConfigureCoordinator(configuration_manager, device):
+def ConfigureCoordinator(device, configuration_manager):
 
+    logging.debug(f'PAN_ID = {device.get_pan_id()}')
     writeChanges = False
     if(device.get_node_id() != configuration_manager.coordinator_node_identifier):
         logging.debug("Setting node ID to Coordinator")
@@ -45,26 +46,29 @@ def ConfigureCoordinator(configuration_manager, device):
 
     if(device.get_pan_id() != configuration_manager.coordinator_pan_id):
         logging.debug("Setting PAN ID to %s" % configuration_manager.coordinator_pan_id)
-        device.set_pan_id(configuration_manager.coordinator_pan_id)
+        pan_id_bytes = bytes.fromhex(configuration_manager.coordinator_pan_id)
+        device.set_pan_id(pan_id_bytes)
         writeChanges = True
 
-    if(device.get_encryption_enabled() != configuration_manager.coordinator_encryption_enable):
-        logging.debug("Enabling encryption")
-        device.set_encryption_enabled(configuration_manager.coordinator_encryption_enable)
-        writeChanges = True
+    logging.debug(f'PAN_ID = {device.get_pan_id()}')
+    logging.debug(f'Node_ID = {device.get_node_id()}')
+#    if(device.get_encryption_enabled() != configuration_manager.coordinator_encryption_enable):
+#        logging.debug("Enabling encryption")
+#        device.set_encryption_enabled(configuration_manager.coordinator_encryption_enable)
+#        writeChanges = True
 
-    if(device.get_encryption_options() != configuration_manager.network_encryption_options):
-        logging.debug("Setting encryption options to %s" % configuration_manager.network_encryption_options)
-        device.set_encryption_options(configuration_manager.network_encryption_options)
-        writeChanges = True
+#    if(device.get_encryption_options() != configuration_manager.network_encryption_options):
+#        logging.debug("Setting encryption options to %s" % configuration_manager.network_encryption_options)
+#        device.set_encryption_options(configuration_manager.network_encryption_options)
+#        writeChanges = True
 
-    if(device.get_node_join_time() != configuration_manager.network_node_join_time):
-        logging.debug("Setting node join time to %s" % configuration_manager.network_node_join_time)
-        device.set_node_join_time(configuration_manager.network_node_join_time)
-        writeChanges = True
+#    if(device.get_node_join_time() != configuration_manager.network_node_join_time):
+#        logging.debug("Setting node join time to %s" % configuration_manager.network_node_join_time)
+#        device.set_node_join_time(configuration_manager.network_node_join_time)
+#        writeChanges = True
 
     if(writeChanges):
-        device.set_network_encryption_key(configuration_manager.network_encryption_key)
+#        device.set_network_encryption_key(configuration_manager.network_encryption_key)
         device.write_changes()
 
 

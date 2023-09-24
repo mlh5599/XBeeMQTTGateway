@@ -20,9 +20,11 @@ def main():
     try:
 
         
-        logging.setLevel(logging.DEBUG)
-        
+        logger = logging.getLogger()
+        logger.setLevel(logging.DEBUG)
+
         exit_code = 0
+
         try:
             opts, args = getopt.getopt(sys.argv[1:], 'c:', ["config="])
         except getopt.GetoptError:
@@ -42,16 +44,33 @@ def main():
             raise
 
         try:
+            logging.debug("Init config manager")
             cm = ConfigurationManager(config_path)
-            cm.load_config
+            logging.debug("Loading config")
+            cm.load_config()
         except Exception as ex:
             logging.error(ex)
             exit_code = 2
             raise
         
+        log_level = cm
+
         logging.debug(f'Setting log level to {cm.log_level}')
-        logging.setLevel(cm.log_level)
-        
+
+        log_level_map = {
+            'TRACE': logging.DEBUG,
+            'DEBUG': logging.DEBUG,
+            'INFO': logging.INFO,
+            'NOTE': logging.INFO,
+            'WARNING': logging.WARNING,
+            'ERROR': logging.ERROR,
+            'FATAL': logging.CRITICAL
+        }
+
+        log_level = log_level_map.get(cm.log_level, logging.DEBUG)
+
+        logger.setLevel(log_level)
+
         logging.debug("Registering SIGINT handler")
         handler = SIGINT_handler()
         signal.signal(signal.SIGINT, handler.signal_handler)
