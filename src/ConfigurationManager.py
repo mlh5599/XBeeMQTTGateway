@@ -1,4 +1,5 @@
 import json
+import logging
 
 class ConfigurationManager:
     def __init__(self, config_path):
@@ -8,17 +9,17 @@ class ConfigurationManager:
 
     def load_config(self):
         try:
-            print(f"Loading config from '{self.config_path}'")
+            logging.debug(f"Loading config from '{self.config_path}'")
             with open(self.config_path, 'r') as config_file:
                 self.app_config = json.load(config_file)
-            print(f"Config loaded: {self.app_config}")
+            logging.debug(f"Config loaded: {self.app_config}")
 
 
         except FileNotFoundError:
-            print(f"Config file '{self.config_path}' not found.")
+            logging.debug(f"Config file '{self.config_path}' not found.")
             raise
         except Exception as ex:
-            print(f"Error loading config from '{self.config_path}': {ex}")
+            logging.debug(f"Error loading config from '{self.config_path}': {ex}")
             raise
     
     # def get_config(self):
