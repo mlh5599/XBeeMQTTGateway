@@ -3,6 +3,7 @@ from digi.xbee.io import IOLine
 import json
 import MQTTHelper
 import time
+import logging
 
 def perform_auto_discovery(remote_xbee_device : RemoteIOSensorDevice):
 
@@ -37,8 +38,8 @@ def publish_raw_adc(remote_xbee_device, channel):
         }
     json_string = json.dumps(sensor)
     discovery_topic = f"homeassistant/binary_sensor/xbee-0x{xbee_address}/{str(device_channel.io_line).replace('.','-')}-raw/config"
-    print(f"Publishing auto discovery for 0x{xbee_address} - {str(device_channel.io_line).replace('.','-')} to topic : {discovery_topic}")
-    print(json_string)
+    logging.debug(f"Publishing auto discovery for 0x{xbee_address} - {str(device_channel.io_line).replace('.','-')} to topic : {discovery_topic}")
+    logging.debug(json_string)
 
     MQTTHelper.client.publish(discovery_topic, json_string, 1, True)
 
@@ -64,7 +65,7 @@ def publish_device_config(remote_xbee_device, channel):
 
     json_string = json.dumps(sensor)
     discovery_topic = f"homeassistant/binary_sensor/xbee-0x{xbee_address}/{str(device_channel.io_line).replace('.','-')}/config"
-    print(f"Publishing auto discovery for 0x{xbee_address} - {str(device_channel.io_line).replace('.','-')} to topic : {discovery_topic}")
-    print(json_string)
+    logging.debug(f"Publishing auto discovery for 0x{xbee_address} - {str(device_channel.io_line).replace('.','-')} to topic : {discovery_topic}")
+    logging.debug(json_string)
     MQTTHelper.client.publish(discovery_topic, json_string)
     

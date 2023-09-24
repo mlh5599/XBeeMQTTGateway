@@ -1,5 +1,6 @@
 from digi.xbee.io import IOLine
 import MQTTHelper
+import logging
 
 class XBeeSensorDevice():
 
@@ -14,7 +15,7 @@ class XBeeSensorDevice():
             new_reading = io_sample.get_analog_value(channel)
             device_channel = self.adc_channels.get(channel)
 
-            print(f"New reading received on channel {str(device_channel.io_line)} = {new_reading} - Publishing to {device_channel.raw_adc_value_topic}")
+            logging.debug(f"New reading received on channel {str(device_channel.io_line)} = {new_reading} - Publishing to {device_channel.raw_adc_value_topic}")
             MQTTHelper.client.publish(device_channel.raw_adc_value_topic, new_reading)
 
             new_binary_value = False
@@ -24,7 +25,7 @@ class XBeeSensorDevice():
                 new_binary_value = not device_channel.greater_than_value
 
             if new_binary_value != device_channel.last_binary_value:
-                print(f"Sample changed, publishing for channel {channel}, last reading: {device_channel.last_binary_value}, new reading: {new_binary_value} to {self.adc_channels[channel].state_topic}")
+                logging.debug(f"Sample changed, publishing for channel {channel}, last reading: {device_channel.last_binary_value}, new reading: {new_binary_value} to {self.adc_channels[channel].state_topic}")
                 self.adc_channels[channel].last_reading = new_reading
                 self.adc_channels[channel].last_binary_value = new_binary_value
                 MQTTHelper.client.publish(self.adc_channels[channel].state_topic, new_binary_value, 1, True)

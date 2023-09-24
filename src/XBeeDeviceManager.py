@@ -7,6 +7,7 @@ from digi.xbee.io import IOLine
 from digi.xbee.io import IOSample
 import json
 from os.path import exists
+import logging
 
 class XBeeDeviceManager():
 
@@ -40,14 +41,14 @@ class XBeeDeviceManager():
     
         device = RemoteIOSensorDevice(remote_xbee.get_node_id(), str(remote_xbee.get_64bit_addr()), channels)
 
-        print(f"Registering remote device.  Address={device.remote_address}, Name={remote_xbee.get_node_id()}")
+        logging.debug(f"Registering remote device.  Address={device.remote_address}, Name={remote_xbee.get_node_id()}")
         XBeeDeviceManager.registered_devices[device.remote_address] = device
-        print(f"Current registered devices: {XBeeDeviceManager.registered_devices}")
+        logging.debug(f"Current registered devices: {XBeeDeviceManager.registered_devices}")
         perform_auto_discovery(device)
 
         return device
 
     def GetRegisteredDevice(address):
         device = XBeeDeviceManager.registered_devices.get(address)
-        print(f"Existing device lookup complete, found: {device}")
+        logging.debug(f"Existing device lookup complete, found: {device}")
         return device

@@ -4,5 +4,6 @@
     "mqtt_broker": "MQTT.HagueHome.lan",
     "mqtt_port": "1883",
     "xbee_reset_pin": 27,
-    "status_light_pin": 24
+    "status_light_pin": 24,
+    "log_level": "ERROR"
 }
