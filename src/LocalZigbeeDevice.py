@@ -29,7 +29,7 @@ def Initialize(configuration_manager, attempt_num=0):
         if attempt_num < 5:
             logging.error("Unable to connect to xbee, trying again")
             logging.error(ex)
-            Initialize(configuration_manager, pi, attempt_num)
+            Initialize(configuration_manager, attempt_num)
         
         else:
             logging.error("Connecting to xbee failed.  Exiting.")
