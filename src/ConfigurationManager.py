@@ -16,10 +16,10 @@ class ConfigurationManager:
 
 
         except FileNotFoundError:
-            logging.debug(f"Config file '{self.config_path}' not found.")
+            logging.error(f"Config file '{self.config_path}' not found.")
             raise
         except Exception as ex:
-            logging.debug(f"Error loading config from '{self.config_path}': {ex}")
+            logging.error(f"Error loading config from '{self.config_path}': {ex}")
             raise
     
     # def get_config(self):
