@@ -1,9 +1,11 @@
 import logging
-import pigpio
 import time
+import platform
 
-
-
+if platform.system() == 'Linux' and platform.machine() == 'armv7l':
+    import pigpio
+else:
+    import FakePigpio as pigpio
 
 def ResetXBee(configuration_manager):
 
@@ -22,3 +24,4 @@ def ResetXBee(configuration_manager):
         time.sleep(1)
         pi.write(configuration_manager.xbee_reset_pin,pigpio.HIGH)
         time.sleep(2)
+

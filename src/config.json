@@ -1,5 +1,5 @@
 {
-    "device_port": "/dev/ttyAMA0",
+    "device_port": "COM4",
     "device_baud_rate": "9600",
     "coordinator_pan_id": "1000",
     "coordinator_scan_channels": "7FFF",

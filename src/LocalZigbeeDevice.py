@@ -3,37 +3,37 @@ import XBeeDeviceManager
 from digi.xbee.io import IOSample
 from digi.xbee.devices import RemoteXBeeDevice
 import logging
-from RaspberryPiFunctions import ResetXBee
+from PinManipulation import ResetXBee
 
-def Initialize(configuration_manager, attempt_num=0):
+def Initialize(config_manager):
 
+    attempt_num = 0
     try:
         attempt_num+=1
         logging.debug(f'Initializing Zigbee device - attempt {attempt_num}')
         
-        ResetXBee(configuration_manager)
+        # ResetXBee(configuration_manager)
 
-        logging.debug("Begin session on port %s" % configuration_manager.app_config["device_port"])
-        logging.debug("Baud rate %s" % configuration_manager.device_baud_rate)
+        logging.debug("Begin session on port %s" % config_manager.app_config["device_port"])
+        logging.debug("Baud rate %s" % config_manager.device_baud_rate)
 
-        device = XBeeDevice(configuration_manager.device_port, configuration_manager.device_baud_rate)
+        device = XBeeDevice(config_manager.device_port, config_manager.device_baud_rate)
         device.open()
         address = device.get_64bit_addr()
         logging.debug("Device open, address = %s" %address)
-
-        ConfigureCoordinator(device, configuration_manager)
-
-        device.add_io_sample_received_callback(io_sample_received_callback)
 
     except Exception as ex:
         if attempt_num < 5:
             logging.error("Unable to connect to xbee, trying again")
             logging.error(ex)
-            Initialize(configuration_manager, attempt_num)
+            Initialize(config_manager, attempt_num)
         
         else:
             logging.error("Connecting to xbee failed.  Exiting.")
             raise
+
+        # ConfigureCoordinator(device, config_manager)
+        device.add_io_sample_received_callback(io_sample_received_callback)
 
 def ConfigureCoordinator(device, configuration_manager):
 
