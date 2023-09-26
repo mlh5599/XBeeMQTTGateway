@@ -1,7 +1,7 @@
 {
     "device_port": "COM4",
     "device_baud_rate": "9600",
-    "coordinator_pan_id": "1000",
+    "coordinator_pan_id": "2000",
     "coordinator_scan_channels": "7FFF",
     "coordinator_node_join_time": "FF",
     "coordinator_node_identifier": "XBeeGateway2",
