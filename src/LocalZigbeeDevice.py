@@ -44,7 +44,7 @@ def ConfigureCoordinator(device, configuration_manager):
 
     writeChanges = GetEncryptionEnabled(device, configuration_manager)
 
-    writeChanges = SetEncryptionOptions(device, configuration_manager)
+    # writeChanges = SetEncryptionOptions(device, configuration_manager)
 
 #    if(device.get_node_join_time() != configuration_manager.network_node_join_time):
 #        logging.debug("Setting node join time to %s" % configuration_manager.network_node_join_time)
