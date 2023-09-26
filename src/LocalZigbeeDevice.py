@@ -32,35 +32,19 @@ def Initialize(config_manager):
             logging.error("Connecting to xbee failed.  Exiting.")
             raise
 
-        # ConfigureCoordinator(device, config_manager)
-        device.add_io_sample_received_callback(io_sample_received_callback)
+    ConfigureCoordinator(device, config_manager)
+    device.add_io_sample_received_callback(io_sample_received_callback)
 
 def ConfigureCoordinator(device, configuration_manager):
 
-    logging.debug(f'PAN_ID = {device.get_pan_id()}')
     writeChanges = False
-    if(device.get_node_id() != configuration_manager.coordinator_node_identifier):
-        logging.debug("Setting node ID to Coordinator")
-        device.set_node_id(configuration_manager.coordinator_node_identifier)
-        writeChanges = True
+    writeChanges = SetNodeID(device, configuration_manager)
 
-    if(device.get_pan_id() != configuration_manager.coordinator_pan_id):
-        logging.debug("Setting PAN ID to %s" % configuration_manager.coordinator_pan_id)
-        pan_id_bytes = bytes.fromhex(configuration_manager.coordinator_pan_id)
-        device.set_pan_id(pan_id_bytes)
-        writeChanges = True
+    writeChanges = SetPanID(device, configuration_manager)
 
-    logging.debug(f'PAN_ID = {device.get_pan_id()}')
-    logging.debug(f'Node_ID = {device.get_node_id()}')
-#    if(device.get_encryption_enabled() != configuration_manager.coordinator_encryption_enable):
-#        logging.debug("Enabling encryption")
-#        device.set_encryption_enabled(configuration_manager.coordinator_encryption_enable)
-#        writeChanges = True
+    writeChanges = GetEncryptionEnabled(device, configuration_manager)
 
-#    if(device.get_encryption_options() != configuration_manager.network_encryption_options):
-#        logging.debug("Setting encryption options to %s" % configuration_manager.network_encryption_options)
-#        device.set_encryption_options(configuration_manager.network_encryption_options)
-#        writeChanges = True
+    # writeChanges = SetEncryptionOptions(device, configuration_manager)
 
 #    if(device.get_node_join_time() != configuration_manager.network_node_join_time):
 #        logging.debug("Setting node join time to %s" % configuration_manager.network_node_join_time)
@@ -70,6 +54,82 @@ def ConfigureCoordinator(device, configuration_manager):
     if(writeChanges):
 #        device.set_network_encryption_key(configuration_manager.network_encryption_key)
         device.write_changes()
+
+# def SetEncryptionOptions(device, configuration_manager):
+#     """
+#     Sets the encryption options on the local Zigbee device to the coordinator encryption options.
+
+#     Args:
+#         device (XBeeDevice): The local Zigbee device.
+#         configuration_manager (ConfigurationManager): The configuration manager.
+
+#     Returns:
+#         bool: True if changes were written to the device, False otherwise.
+#     """
+#     device_updated = False
+#     if(device.get_encryption_options() != configuration_manager.network_encryption_options):
+#         logging.debug("Setting encryption options to %s" % configuration_manager.network_encryption_options)
+#         device.set_encryption_options(configuration_manager.network_encryption_options)
+#         device_updated = True
+#     return device_updated
+
+
+def GetEncryptionEnabled(device, configuration_manager):
+    """
+    Sets the encryption enabled flag on the local Zigbee device to the coordinator encryption enabled flag.
+    
+    Args:
+        device (XBeeDevice): The local Zigbee device.
+        configuration_manager (ConfigurationManager): The configuration manager.
+        
+    Returns:
+            bool: True if changes were written to the device, False otherwise.
+    """
+
+    device_updated = False
+    if(device.get_encryption_enabled() != configuration_manager.coordinator_encryption_enable):
+        logging.debug("Enabling encryption")
+        device.set_encryption_enabled(configuration_manager.coordinator_encryption_enable)
+        device_updated = True
+    return device_updated
+
+def SetPanID(device, configuration_manager):
+    """
+    Sets the PAN ID of the local Zigbee device to the coordinator PAN ID.
+
+    Args:
+        device (XBeeDevice): The local Zigbee device.
+        configuration_manager (ConfigurationManager): The configuration manager.
+
+    Returns:
+        bool: True if changes were written to the device, False otherwise.
+    """
+    device_updated = False
+    if(device.get_pan_id() != configuration_manager.coordinator_pan_id):
+        logging.debug(f'Setting PAN ID to {configuration_manager.coordinator_pan_id}, current ID is {device.get_pan_id()}')
+        pan_id_bytes = bytes.fromhex(configuration_manager.coordinator_pan_id)
+        device.set_pan_id(pan_id_bytes)
+        device_updated = True
+    return device_updated
+
+def SetNodeID(device, configuration_manager):
+    """
+        Set the node ID to the value in the configuration manager if it is not already set
+
+        Arguments:
+            device {XBeeDevice} -- The device to set the node ID on
+            configuration_manager {ConfigurationManager} -- The configuration manager to get the node ID from
+
+        Returns:
+            bool -- True if the node ID was changed, false otherwise
+    """
+    device_updated = False
+    if(device.get_node_id() != configuration_manager.coordinator_node_identifier):
+
+        logging.debug("Setting node ID to Coordinator")
+        device.set_node_id(configuration_manager.coordinator_node_identifier)
+        device_updated = True
+    return device_updated
 
 
 
