@@ -26,44 +26,44 @@ class ConfigurationManager:
     #     return self.app_config
     
     @property
-    def device_port(self):
-        return self.app_config["device_port"]
+    def coordinator_port(self):
+        return self.app_config["Coordinator"]["port"]
     
     @property
-    def device_baud_rate(self):
-        return self.app_config["device_baud_rate"]
+    def coordinator_baud_rate(self):
+        return self.app_config["Coordinator"]["baud_rate"]
     
     @property
     def coordinator_pan_id(self):
-        return self.app_config["coordinator_pan_id"]
+        return self.app_config["Coordinator"]["pan_id"]
     
     @property
     def coordinator_scan_channels(self):
-        return self.app_config["coordinator_scan_channels"]
+        return self.app_config["Coordinator"]["scan_channels"]
     
     @property
     def coordinator_node_join_time(self):
-        return self.app_config["coordinator_node_join_time"]
+        return self.app_config["Coordinator"]["node_join_time"]
     
     @property
     def coordinator_node_identifier(self):
-        return self.app_config["coordinator_node_identifier"]
+        return self.app_config["Coordinator"]["node_identifier"]
     
     @property
     def coordinator_encryption_enable(self):
-        return self.app_config["coordinator_encryption_enable"]
+        return self.app_config["Coordinator"]["encryption_enable"]
     
     @property
     def coordinator_encryption_options(self):
-        return self.app_config["coordinator_encryption_options"]
+        return self.app_config["Coordinator"]["encryption_options"]
     
     @property
     def coordinator_encryption_key(self):
-        return self.app_config["coordinator_encryption_key"]
+        return self.app_config["Coordinator"]["encryption_key"]
     
     @property
     def coordinator_network_encryption_key(self):
-        return self.app_config["coordinator_network_encryption_key"]
+        return self.app_config["Coordinator"]["network_encryption_key"]
     
     @property
     def mqtt_broker(self):
@@ -74,8 +74,8 @@ class ConfigurationManager:
         return self.app_config["mqtt_port"] 
     
     @property
-    def xbee_reset_pin(self):
-        return self.app_config["xbee_reset_pin"]
+    def coordinator_reset_pin(self):
+        return self.app_config["Coordinator"]["reset_pin"]
     
     @property
     def status_light_pin(self):

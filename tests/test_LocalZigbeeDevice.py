@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock, patch, PropertyMock
-from LocalZigbeeDevice import Initialize, ConfigureCoordinator, SetNodeID, SetPanID, GetEncryptionEnabled
+from LocalZigbeeDevice import *
 
 
 def test_SetNodeID_With_Change():
@@ -103,6 +103,23 @@ def test_EncryptionEnabled_No_Change():
 
     # Assert that changes were written
     assert result == False
+
+def test_SetEncryptionOptions_With_Change():
+    # Create a mock XBeeDevice object
+    device_mock = MagicMock()
+    device_mock.get_encryption_options.return_value = "02"
+    # Create a mock ConfigurationManager object
+    configuration_manager_mock = MagicMock()
+    configuration_manager_mock.network_encryption_options = "03"
+
+    # Call the SetEncryptionOptions function
+    result = SetEncryptionOptions(device_mock, configuration_manager_mock)
+
+    # Assert that the encryption options were set to the coordinator node identifier
+    device_mock.set_encryption_options.assert_called_once_with(b'\x03')
+
+    # Assert that changes were written
+    assert result == True
 
 # @patch('LocalZigbeeDevice.XBeeDevice')
 # def test_configure_coordinator(mock_device):

@@ -12,7 +12,7 @@ def Initialize(config_manager):
         attempt_num+=1
         logging.debug(f'Initializing Zigbee device - attempt {attempt_num}')
         
-        # ResetXBee(configuration_manager)
+        ResetXBee(config_manager)
 
         logging.debug("Begin session on port %s" % config_manager.app_config["device_port"])
         logging.debug("Baud rate %s" % config_manager.device_baud_rate)
@@ -38,13 +38,14 @@ def Initialize(config_manager):
 def ConfigureCoordinator(device, configuration_manager):
 
     writeChanges = False
-    writeChanges = SetNodeID(device, configuration_manager)
-
+    
     writeChanges = SetPanID(device, configuration_manager)
+    
+    writeChanges = SetNodeID(device, configuration_manager)
 
     writeChanges = GetEncryptionEnabled(device, configuration_manager)
 
-    # writeChanges = SetEncryptionOptions(device, configuration_manager)
+    writeChanges = SetEncryptionOptions(device, configuration_manager)
 
 #    if(device.get_node_join_time() != configuration_manager.network_node_join_time):
 #        logging.debug("Setting node join time to %s" % configuration_manager.network_node_join_time)
@@ -55,23 +56,24 @@ def ConfigureCoordinator(device, configuration_manager):
 #        device.set_network_encryption_key(configuration_manager.network_encryption_key)
         device.write_changes()
 
-# def SetEncryptionOptions(device, configuration_manager):
-#     """
-#     Sets the encryption options on the local Zigbee device to the coordinator encryption options.
+def SetEncryptionOptions(device, configuration_manager):
+    """
+    Sets the encryption options on the local Zigbee device to the coordinator encryption options.
 
-#     Args:
-#         device (XBeeDevice): The local Zigbee device.
-#         configuration_manager (ConfigurationManager): The configuration manager.
+    Args:
+        device (XBeeDevice): The local Zigbee device.
+        configuration_manager (ConfigurationManager): The configuration manager.
 
-#     Returns:
-#         bool: True if changes were written to the device, False otherwise.
-#     """
-#     device_updated = False
-#     if(device.get_encryption_options() != configuration_manager.network_encryption_options):
-#         logging.debug("Setting encryption options to %s" % configuration_manager.network_encryption_options)
-#         device.set_encryption_options(configuration_manager.network_encryption_options)
-#         device_updated = True
-#     return device_updated
+    Returns:
+        bool: True if changes were written to the device, False otherwise.
+    """
+    device_updated = False
+    if(device.get_encryption_options() != configuration_manager.network_encryption_options):
+        logging.debug("Setting encryption options to %s" % configuration_manager.network_encryption_options)
+        encryption_option_bytes = bytes.fromhex(configuration_manager.network_encryption_options)
+        device.set_encryption_options(encryption_option_bytes)
+        device_updated = True
+    return device_updated
 
 
 def GetEncryptionEnabled(device, configuration_manager):
