@@ -3,38 +3,49 @@ import pytest
 from ConfigurationManager import ConfigurationManager
 import json
 
-def test_load_config_success(tmp_path):
-    # Create a temporary config file for testing
-    config_data = {
-    "device_port": "test1",
-    "device_baud_rate": "test2",
-    "coordinator_pan_id": "0x1234",
-    "mqtt_broker": "test3",
-    "mqtt_port": "test4",
-    "xbee_reset_pin": 1,
-    "status_light_pin": 2
+config_data = {
+    "mqtt_broker": "MQTT.HagueHome.lan",
+    "mqtt_port": 1883,
+    "status_light_pin": 24,
+    "log_level": "DEBUG",
+    "Coordinator": {
+        "port": "COM4",
+        "baud_rate": 9600,
+        "pan_id": "2000",
+        "scan_channels": "FF",
+        "node_join_time": "FF",
+        "node_identifier": "TestGateway",
+        "encryption_enable": "1",
+        "encryption_options": "0",
+        "encryption_key": "0",
+        "network_encryption_key": "0x81041771",
+        "reset_pin": 27
+    }
 }
 
-    config_path = tmp_path / "config.json"
+def test_load_config_success():
+    # Create a temporary config file
+    config_path = "config.json"
     with open(config_path, 'w') as config_file:
         json.dump(config_data, config_file)
 
     cm = ConfigurationManager(config_path)
     cm.load_config()
-    # Load the config and assert the result
-    result = cm.app_config
-    print(result)
-    print(config_data)
-    assert result == config_data
 
-    assert cm.device_port == config_data["device_port"]
-    assert cm.device_baud_rate == config_data["device_baud_rate"]
-    assert cm.coordinator_pan_id == config_data["coordinator_pan_id"]
-    assert cm.mqtt_broker == config_data["mqtt_broker"]
-    assert cm.mqtt_port == config_data["mqtt_port"] 
-    assert cm.xbee_reset_pin == config_data["xbee_reset_pin"]
-    assert cm.status_light_pin == config_data["status_light_pin"]
-
+    # Assert that the configuration manager has the expected values
+    assert cm.coordinator_port == "COM4"
+    assert cm.coordinator_baud_rate == 9600
+    assert cm.coordinator_pan_id == "2000"
+    assert cm.coordinator_scan_channels == "FF"
+    assert cm.coordinator_node_join_time == "FF"
+    assert cm.coordinator_node_identifier == "TestGateway"
+    assert cm.coordinator_encryption_enable == "1"
+    assert cm.coordinator_encryption_options == "0"
+    assert cm.coordinator_reset_pin == 27
+    assert cm.status_light_pin == 24
+    assert cm.mqtt_broker == "MQTT.HagueHome.lan"
+    assert cm.mqtt_port == 1883
+    # Delete the temporary config file
     os.remove(config_path)
 
 def test_load_config_file_not_found():
