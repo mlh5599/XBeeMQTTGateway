@@ -133,7 +133,23 @@ def SetNodeID(device, configuration_manager):
         device_updated = True
     return device_updated
 
+def SetScanDuration(device, configuration_manager):
+    """
+    Sets the scan duration of the local Zigbee device to the coordinator scan duration.
 
+    Args:
+        device (XBeeDevice): The local Zigbee device.
+        configuration_manager (ConfigurationManager): The configuration manager.
+
+    Returns:
+        bool: True if changes were written to the device, False otherwise.
+    """
+    device_updated = False
+    if(device.get_scan_duration() != configuration_manager.coordinator_scan_duration):
+        logging.debug("Setting scan duration to %s" % configuration_manager.coordinator_scan_duration)
+        device.set_scan_duration(configuration_manager.coordinator_scan_duration)
+        device_updated = True
+    return device_updated
 
 
 def io_sample_received_callback(io_sample : IOSample, remote_xbee : RemoteXBeeDevice):

@@ -2,13 +2,14 @@ import os
 import pytest
 from ConfigurationManager import ConfigurationManager
 import json
+from unittest.mock import MagicMock, patch
 
 config_data = {
     "mqtt_broker": "MQTT.HagueHome.lan",
     "mqtt_port": 1883,
     "status_light_pin": 24,
     "log_level": "DEBUG",
-    "Coordinator": {
+    "coordinator": {
         "port": "COM4",
         "baud_rate": 9600,
         "pan_id": "2000",
@@ -19,9 +20,11 @@ config_data = {
         "encryption_options": "0",
         "encryption_key": "0",
         "network_encryption_key": "0x81041771",
-        "reset_pin": 27
+        "reset_pin": 27,
+
     }
 }
+
 
 def test_load_config_success():
     # Create a temporary config file
@@ -63,3 +66,5 @@ def test_load_config_invalid_json(tmp_path):
     with pytest.raises(json.decoder.JSONDecodeError):
         cm = ConfigurationManager(config_path)
         cm.load_config()
+
+

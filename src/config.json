@@ -3,11 +3,12 @@
     "mqtt_port": "1883",
     "status_light_pin": 24,
     "log_level": "DEBUG",
-    "Coordinator": {
+    "coordinator": {
         "port": "COM4",
         "baud_rate": 9600,
         "pan_id": "2000",
         "scan_channels": "7FFF",
+        "scan_duration": "03",
         "node_join_time": "FF",
         "node_identifier": "XBeeGateway2",
         "encryption_enable": "1",
