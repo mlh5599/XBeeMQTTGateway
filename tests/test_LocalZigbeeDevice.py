@@ -1,6 +1,27 @@
 from unittest.mock import MagicMock, patch, PropertyMock
 from LocalZigbeeDevice import *
 
+testConfigs = {
+    "mqtt_broker": "MQTT.HagueHome.lan",
+    "mqtt_port": "1883",
+    "status_light_pin": 24,
+    "log_level": "DEBUG",
+    "Coordinator": {
+        "port": "COM4",
+        "baud_rate": 9600,
+        "pan_id": "2000",
+        "scan_channels": "7FFF",
+        "scan_duration": "03",
+        "node_join_time": "FF",
+        "node_identifier": "XBeeGateway2",
+        "encryption_enable": "1",
+        "encryption_options": "0",
+        "encryption_key": "0",
+        "network_encryption_key": "0x81041771",
+        "reset_pin": 27
+    }
+}
+
 
 def test_SetNodeID_With_Change():
     # Create a mock XBeeDevice object
