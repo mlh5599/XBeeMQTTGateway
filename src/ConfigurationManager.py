@@ -248,6 +248,307 @@ class ConfigurationManager:
         return self.app_config["coordinator"].get("network_encryption_key",'""')
     
     @property
+    def coordinator_parity(self):
+        """
+        Set/read the serial interface parity. 0=none, 1=even, 2=odd.
+        Range 0x0 - 0x2 (Default: 0)
+        """
+        return self.app_config["coordinator"].get("parity","0")
+    
+    @property
+    def coordinator_stop_bits(self):
+        """
+        Set/read the serial interface stop bits. 0=1 stop bit, 1=2 stop bits.
+        Range 0x0 - 0x1 (Default: 0)
+        """
+        return self.app_config["coordinator"].get("stop_bits","0")
+
+    @property
+    def coordinator_DIO7_configuration(self):
+        """
+        Configure options for the DIO7 line of the module. 
+        Options include: CTS flow control, Digital Input and Output, or RS-485 enable control.
+        0 = Disable
+        1 = CTS flow control
+        2 = N/A
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        6 = RS-485 Enable Low
+        7 = RS-485 Enable High
+        Default = 1
+        """
+        return self.app_config["coordinator"].get("DIO7_configuration","1")
+
+    @property
+    def coordinator_DIO6_configuration(self):
+        """
+        Configure options for the DIO6 line of the module. 
+        Options include: RTS flow control, Digital Input and Output, or RS-485 direction control.
+        0 = Disable
+        1 = CTS flow control
+        2 = N/A
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default = 0
+        """
+        return self.app_config["coordinator"].get("DIO6_configuration","1")
+
+    @property
+    def coordinator_API_enable(self):
+        """
+        Enable or disable API mode.
+        1 = API enabled
+        2 = API enabled, with escaped characters
+        Default: 1
+        """
+        return self.app_config["coordinator"].get("API_enable","1")
+
+    @property
+    def coordinator_API_output_mode(self):
+        """
+        Set the API output mode register value. 0 - Received Data formatted as native API 
+        frame format. 1 - Received RF data formatted as Explicit Rx-Indicator. 3 - Same as 1,
+          plus received ZDO requests are passed out the UART.
+        Default: 0
+        """
+        return self.app_config["coordinator"].get("API_output_mode","0")
+    
+    @property
+    def coordinator_cyclic_sleep_period(self):
+        """
+        Set/read Cyclic sleep period for cyclic sleeping remotes. Set SP on parent 
+        (Coordinator or Router) to match the largest SP of its end device children. 
+        On a router or coordinator, SP determines the transmission timeout when sending 
+        to a sleeping end device. SP also determines how long the parent will buffer a 
+        message for a sleeping child.
+        Range 0x20 - 0xAF0 (Default: 20)
+        """
+        return self.app_config["coordinator"].get("cyclic_sleep_period","20")
+    
+    @property
+    def coordinator_number_of_cyclic_sleep_periods(self):
+        """
+        Set/read the number of cyclic sleep periods used to calculate end device poll 
+        timeout. If an end device does not send a poll request to its parent coordinator 
+        or router within the poll timeout, the end device is removed from the child table. 
+        The poll timeout is calculated in milliseconds as (3 * SN * (SP * 10ms)), minimum 
+        of 5 seconds. i.e. if SN=15, SP=0x64, the timeout is 45 seconds.
+        Range 0x1 - 0xFFFF (Default: 1)
+        """
+        return self.app_config["coordinator"].get("number_of_cyclic_sleep_periods","1")
+    
+    @property
+    def coordinator_AD0_DI0_configuration(self):
+        """
+        Configure options for the AD0/DIO0 line of the module. Options include: Enabling 
+        commissioning button functionality, Analog to Digital converter,Digital Input 
+        and Output.
+        0 = Disabled
+        1 = Commissioning Button
+        2 = Analog to Digital converter
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default: 1
+        """
+        return self.app_config["coordinator"].get("AD0_DI0_configuration","1")
+
+    @property
+    def coordinator_AD1_DIO1_configuration(self):
+        """
+        Configure options for the AD1/DIO1 line of the module. Options include: 
+        Analog to Digital converter, Digital Input and Output.
+        0 = Disabled
+        1 = N/A
+        2 = Analog to Digital converter
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default: 0
+        """
+        return self.app_config["coordinator"].get("AD1_DIO1_configuration","0")
+
+    @property
+    def coordinator_AD2_DIO2_configuration(self):
+        """
+        Configure options for the AD2/DIO2 line of the module. Options include: 
+        Analog to Digital converter, Digital Input and Output.
+        0 = Disabled
+        1 = N/A
+        2 = Analog to Digital converter
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default: 0
+        """
+        return self.app_config["coordinator"].get("AD2_DIO2_configuration","0")
+    
+    @property
+    def coordinator_AD3_DIO3_configuration(self):
+        """
+        Configure options for the AD3/DIO3 line of the module. Options include: 
+        Analog to Digital converter, Digital Input and Output.
+        0 = Disabled
+        1 = N/A
+        2 = Analog to Digital converter
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default: 0
+        """
+        return self.app_config["coordinator"].get("AD3_DIO3_configuration","0")
+
+    @property
+    def coordinator_DIO4_configuration(self):
+        """
+        Configure options for the AD4/DIO4 line of the module. Options include: 
+        Digital Input and Output.
+        0 = Disabled
+        1 = N/A
+        2 = N/A
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default: 0
+        """
+        return self.app_config["coordinator"].get("DIO4_configuration","0")
+
+    @property
+    def coordinator_DIO5_configuration(self):
+        """
+        Configure options for the DIO5/Assoc line of the module. 
+        Options include: Associated LED indicator (blinks when associated),Digital 
+        Input and Output.
+        0 = Disabled
+        1 = Associated Indicator
+        2 = N/A
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default: 1
+        """
+        return self.app_config["coordinator"].get("DIO5_configuration","1")
+
+    @property
+    def coordinator_DIO10_PWM0_configuration(self):
+        """
+        Configure options for the DIO10/PWM0 line of the module. Options include: 
+        Digital Input and Output, Pulse Width Modulation.
+        0 = Disabled
+        1 = RSSI PWM Output
+        2 = N/A
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default: 1
+        """
+        return self.app_config["coordinator"].get("DIO10_PWM0_configuration","1")
+
+    @property
+    def coordinator_DIO11_configuration(self):
+        """
+        Configure options for the DIO11 line of the module. Options include: 
+        Digital Input and Output.
+        0 = Disabled
+        1 = N/A
+        2 = N/A
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default: 0
+        """
+        return self.app_config["coordinator"].get("DIO11_configuration","0")
+
+    @property
+    def coordinator_DIO12_configuration(self):
+        """
+        Configure options for the DIO12 line of the module. Options include: 
+        Digital Input and Output.
+        0 = Disabled
+        1 = N/A
+        2 = N/A
+        3 = Digital Input
+        4 = Digital Output Low
+        5 = Digital Output High
+        Default: 0
+        """
+        return self.app_config["coordinator"].get("DIO12_configuration","0")
+
+
+    @property
+    def coordinator_pull_up_resistor_enable(self):
+        """
+        Set/read bitfield to configure internal pullup resistors status for I/O lines. 
+        1=internal pullup enabled, 0=no internal pullup. 
+        Bitfield map: 
+        (13)DIO7/CTS, (12)-DIO11, (11)-DIO10/PWM0, (10)-DIO12, (9)-On/Sleep, 
+        (8)Associate, (7)-DIN/Config, (6)-Sleep_Rq, (5)-RTS, (4)-AD0/DIO0, 
+        (3)-AD1/DIO1, (2)-AD2/DIO2, (1)-AD3/DIO3, (0)-DIO4
+        Range 0x0 - 0x3FFF (Default: 1FFF)
+        """
+        return self.app_config["coordinator"].get("pull_up_resistor_enable","1FFF")
+    
+    @property
+    def coordinator_associate_LED_blink_time(self):
+        """
+        Set/read the Associate LED blink rate. This value determines the 
+        blink rate of the Associate/DIO5 pin if D5=1 and the module has started a 
+        network. Setting LT to 0 will use the default blink time (500ms).
+        Range 0x0A - 0xFF (Default: 0)
+        """
+        return self.app_config["coordinator"].get("associate_LED_blink_time","0")
+    
+    @property
+    def coordinator_rssi_pwm_timer(self):
+        """
+        Set/read PWM timer register. Set duration of PWM (pulse width modulation) 
+        signal output on the RSSI pin (P6). The signal duty cycle is updated with 
+        each received packet or APS acknowledgment and is shut off when the timer expires.
+        Range 0x0 - 0xFF (Default: 28)
+        """
+        return self.app_config["coordinator"].get("rssi_pwm_timer","28")
+    
+    @property
+    def coordinator_device_options(self):
+        """
+        Bit0 - Reserved. Bit1 - Reserved. Bit2 - Reserved. Bit3 - Disable NULL Transport Key.
+        Range 0x0 - 0xFF (Default: 1)
+        """
+        return self.app_config["coordinator"].get("device_options","1")
+
+    @property
+    def coordinator_IO_sampling_rate(self):
+        """
+        Set the IO sampling rate to enable periodic sampling. If set >0, all enabled 
+        digital IO and analog inputs will be sampled and transmitted every IR milliseconds. 
+        IO Samples are transmitted to the address specified by DH+DL.
+        Range 0x32 - 0xFFFF (Default: 0)
+        """
+        return self.app_config["coordinator"].get("IO_sampling_rate","0")
+    
+    @property
+    def coordinator_digital_IO_change_detection(self):
+        """
+        Bitfield that configures which digital IO pins should be monitored for change
+        detection. If a change is detected on an enabled digital IO pin, a digital IO
+        sample is immediately transmitted to the address specified by DH+DL.
+        Range 0x0 - 0xFFFF (Default: 0)
+        """
+        return self.app_config["coordinator"].get("digital_IO_change_detection","0")
+    
+    @property
+    def coordinator_supply_voltage_high_threshold(self):
+        """
+        Set/read the supply voltage high threshold. If the supply voltage is above 
+        this threshold, the module will set the supply voltage high bit in the 
+        IO sample packet. The supply voltage is sampled every 1.1 seconds.
+        Range 0x0 - 0xFFFF (Default: 0)
+        """
+        return self.app_config["coordinator"].get("supply_voltage_high_threshold","0")
+
+    @property
     def mqtt_broker(self):
         return self.app_config["mqtt_broker"]
     
