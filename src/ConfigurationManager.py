@@ -31,7 +31,21 @@ class ConfigurationManager:
     
     @property
     def coordinator_baud_rate(self):
-        return self.app_config["coordinator"]["baud_rate"]
+        """
+         the serial interface baud rate for communication between modem serial port 
+         and host. Request non-standard baud rates above 0x12C using a terminal window. 
+         Read BD register to find actual baud rate achieved.
+         0 - 1200
+         1 - 2400
+         2 - 4800
+         3 - 9600
+         4 - 19200
+         5 - 38400
+         6 - 57600
+         7 - 115200
+         Default: 3
+         """
+        return self.app_config["coordinator"].get("baud_rate", 9600)
     
     @property
     def coordinator_pan_id(self):
@@ -159,22 +173,79 @@ class ConfigurationManager:
         """
         return self.app_config["coordinator"].get("node_discovery_backoff","3C")
 
-
+    @property
+    def coordinator_node_doscovery_options(self):
+        """
+        Sets the node discovery options register. Options include 0x01 - Append DD value 
+        to end of node discovery, 0x02 - Return devices own ND response first.
+        Range 0x0 - 0x3 (Default: 0)
+        """
+        return self.app_config["coordinator"].get("node_discovery_options","0")
+    
+    @property
+    def coordinator_pan_conflict_threshold(self):
+        """
+        Set/read threshold for the number of PAN id conflict reports that must be 
+        received by the network manager within one minute to trigger a PAN id change.
+        Range 0x1 - 0x3F (Default: 3)
+        """
+        return self.app_config["coordinator"].get("pan_conflict_threshold","3")
+    
+    @property
+    def coordinator_power_level(self):
+        """
+        Select/Read transmitter output power. Power levels relative to 
+        PP: 0=-10dB, 1=-6dB, 2=-4dB, 3=-2dB, 4=0dB.
+        Range 0x0 - 0x4 (Default: 4)
+        """
+        return self.app_config["coordinator"].get("power_level","4")
+    
+    @property
+    def coordinator_power_mode(self):
+        """
+        Select/Read module boost mode setting. If enabled, boost mode improves 
+        sensitivity by 1dB and increases output power by 2dB, improving the link 
+        margin and range.
+        Default: 1
+        """
+        return self.app_config["coordinator"].get("power_mode","1")
+    
     @property
     def coordinator_encryption_enable(self):
-        return self.app_config["coordinator"]["encryption_enable"]
+        """
+        Enable or disable ZigBee encryption.
+        Default: 0
+        """
+        return self.app_config["coordinator"].get("encryption_enable","0")
+    
     
     @property
     def coordinator_encryption_options(self):
-        return self.app_config["coordinator"]["encryption_options"]
+        """
+        Set the ZigBee Encryption options: Bit0 = Acquire / Transmit network 
+        security key unencrypted during joining, Bit1 = Use Trust Center.
+        Range 0x0 - 0x3 (Default: 0)
+        """
+        return self.app_config["coordinator"].get("encryption_options","0")
     
     @property
     def coordinator_encryption_key(self):
-        return self.app_config["coordinator"]["encryption_key"]
+        """
+        Sets key used for encryption and decryption (ZigBee trust center link key). 
+        This register can not be read.
+        0 - 32 hexadecimal characters (Default: '')
+        """
+        return self.app_config["coordinator"].get("encryption_key",'""')
     
     @property
     def coordinator_network_encryption_key(self):
-        return self.app_config["coordinator"]["network_encryption_key"]
+        """
+        Sets network key used for network encryption and decryption. 
+        If set to 0 (default), the coordinator selects a random network encryption 
+        key (recommended). This register can not be read.
+        0 - 32 hexadecimal characters (Default: '')
+        """
+        return self.app_config["coordinator"].get("network_encryption_key",'""')
     
     @property
     def mqtt_broker(self):
