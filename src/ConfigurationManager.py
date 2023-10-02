@@ -153,7 +153,7 @@ class ConfigurationManager:
         Setting AR to 0 sends one broadcast.
         Range 0x0 - 0xFF (Default: FF)
         """
-        return self.app_config["coordinator"].get("many_to_one_broadcast_radius","FF")
+        return self.app_config["coordinator"].get("many_to_one_broadcast_time","FF")
 
     @property
     def coordinator_device_type_identifier(self):
@@ -340,7 +340,7 @@ class ConfigurationManager:
         return self.app_config["coordinator"].get("number_of_cyclic_sleep_periods","1")
     
     @property
-    def coordinator_AD0_DI0_configuration(self):
+    def coordinator_AD0_DIO0_configuration(self):
         """
         Configure options for the AD0/DIO0 line of the module. Options include: Enabling 
         commissioning button functionality, Analog to Digital converter,Digital Input 
@@ -353,7 +353,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 1
         """
-        return self.app_config["coordinator"].get("AD0_DI0_configuration","1")
+        return self.app_config["coordinator"].get("AD0_DIO0_configuration","1")
 
     @property
     def coordinator_AD1_DIO1_configuration(self):
