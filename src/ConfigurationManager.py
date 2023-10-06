@@ -27,7 +27,7 @@ class ConfigurationManager:
     
     @property
     def coordinator_port(self):
-        return self.app_config["coordinator"]["port"]
+        return self.app_config.get("coordinator", {})["port"]
     
     @property
     def coordinator_baud_rate(self):
@@ -45,7 +45,7 @@ class ConfigurationManager:
          7 - 115200
          Default: 3
          """
-        return self.app_config["coordinator"].get("baud_rate", 9600)
+        return self.app_config.get("coordinator", {}).get("baud_rate", 9600)
     
     @property
     def coordinator_pan_id(self):
@@ -54,7 +54,7 @@ class ConfigurationManager:
         Valid range is 0 - 0xFFFFFFFFFFFFFFFF. (Default: 0)
         Alternatively, set ID=0 for the coordinator to choose a random Pan ID.
         """
-        return self.app_config["coordinator"].get("pan_id", 0)
+        return self.app_config.get("coordinator",{}).get("pan_id", "0")
     
     @property
     def coordinator_scan_channels(self):
@@ -64,7 +64,7 @@ class ConfigurationManager:
         startup: Bit 15 = Chan 0x1A . . . Bit 0 = Chan 0x0B
         Valid range is 0 - 0xFFFF (Default: FFFF)
         """
-        return self.app_config["coordinator"].get("scan_channels", 0xFFFF)
+        return self.app_config.get("coordinator", {}).get("scan_channels", "FFFF")
     
     @property
     def coordinator_scan_duration(self):
@@ -74,7 +74,7 @@ class ConfigurationManager:
         Scan Time = SC * (2 ^ SD) * 15.36ms. (SC=# channels)
         Valid range is 0x0 - 0x07 (Default: 3)
         """
-        return self.app_config["coordinator"].get("scan_duration", "3")
+        return self.app_config.get("coordinator", {}).get("scan_duration", "3")
 
     @property
     def coordinator_zigbee_stack_profile(self):
@@ -82,7 +82,7 @@ class ConfigurationManager:
         Set/read the ZigBee stack profile setting. 0=Network Specific, 1=ZigBee-2006, 2=ZigBee-PRO
         Range: 0x0 - 0x2 (Default: 0)
         """
-        return self.app_config["coordinator"].get("zigbee_stack_profile", "0")
+        return self.app_config.get("coordinator", {}).get("zigbee_stack_profile", "0")
     
     @property
     def coordinator_node_join_time(self):
@@ -92,7 +92,7 @@ class ConfigurationManager:
         the device will always allow joining.
         Range: 0x0 - 0xFF (Default: FF)
         """
-        return self.app_config["coordinator"].get("node_join_time", "FF")
+        return self.app_config.get("coordinator", {}).get("node_join_time", "FF")
 
     @property
     def coordinator_destination_address_high(self):
@@ -102,7 +102,7 @@ class ConfigurationManager:
         0x0000000000000000 can be used to address the Pan Coordinator.
         Range: 0x0 - 0xFFFFFFFF (Default 0)
         """
-        return self.app_config["coordinator"].get("destination_address_high")
+        return self.app_config.get("coordinator", {}).get("destination_address_high", "0")
 
     @property
     def coordinator_destination_address_low(self):
@@ -112,7 +112,7 @@ class ConfigurationManager:
         0x0000000000000000 can be used to address the Pan Coordinator.
         Range: 0x0 - 0xFFFFFFFF (Default FFFF)
         """
-        return self.app_config["coordinator"].get("destination_address_low")
+        return self.app_config.get("coordinator", {}).get("destination_address_low", "FFFF")
 
     @property
     def coordinator_node_identifier(self):
@@ -120,7 +120,7 @@ class ConfigurationManager:
         Set/read Node Identifier string
         0-20 ASCII characters (Default '')
         """
-        return self.app_config["coordinator"].get("node_identifier", '""')
+        return self.app_config.get("coordinator", {}).get("node_identifier", '')
     
     @property
     def coordinator_maximum_hops(self):
@@ -132,7 +132,7 @@ class ConfigurationManager:
         and acknowledgment to traverse about 8 hops.
         Range: 0x0 - 0xFF (Default 1e)
         """
-        return self.app_config["coordinator"].get("maximum_hops", "1e")
+        return self.app_config.get("coordinator", {}).get("maximum_hops", "1e")
 
     @property
     def coordinator_broadcast_radius(self):
@@ -141,7 +141,7 @@ class ConfigurationManager:
         Set to 0 for maximum radius.
         Range 0x0 - 0x1E (Default: FF)
         """
-        return self.app_config["coordinator"].get("broadcast_radius","FF")
+        return self.app_config.get("coordinator", {}).get("broadcast_radius","FF")
 
     @property
     def coordinator_many_to_one_broadcast_time(self):
@@ -153,7 +153,7 @@ class ConfigurationManager:
         Setting AR to 0 sends one broadcast.
         Range 0x0 - 0xFF (Default: FF)
         """
-        return self.app_config["coordinator"].get("many_to_one_broadcast_time","FF")
+        return self.app_config.get("coordinator", {}).get("many_to_one_broadcast_time","FF")
 
     @property
     def coordinator_device_type_identifier(self):
@@ -162,7 +162,7 @@ class ConfigurationManager:
         This can be used to differentiate multiple XBee-based products.
         Range 0x0 - 0xFFFFFFFF (Default: 3000)
         """
-        return self.app_config["coordinator"].get("device_type_identifier","3000")
+        return self.app_config.get("coordinator", {}).get("device_type_identifier","3000")
 
     @property
     def coordinator_node_discovery_backoff(self):
@@ -171,7 +171,7 @@ class ConfigurationManager:
         This sets the maximum delay for Node Discovery responses to be sent (ND, DN).
         Range 0x20 - 0xFF (Default: 3C)
         """
-        return self.app_config["coordinator"].get("node_discovery_backoff","3C")
+        return self.app_config.get("coordinator", {}).get("node_discovery_backoff","3C")
 
     @property
     def coordinator_node_doscovery_options(self):
@@ -180,7 +180,7 @@ class ConfigurationManager:
         to end of node discovery, 0x02 - Return devices own ND response first.
         Range 0x0 - 0x3 (Default: 0)
         """
-        return self.app_config["coordinator"].get("node_discovery_options","0")
+        return self.app_config.get("coordinator", {}).get("node_discovery_options","0")
     
     @property
     def coordinator_pan_conflict_threshold(self):
@@ -189,7 +189,7 @@ class ConfigurationManager:
         received by the network manager within one minute to trigger a PAN id change.
         Range 0x1 - 0x3F (Default: 3)
         """
-        return self.app_config["coordinator"].get("pan_conflict_threshold","3")
+        return self.app_config.get("coordinator", {}).get("pan_conflict_threshold","3")
     
     @property
     def coordinator_power_level(self):
@@ -198,7 +198,7 @@ class ConfigurationManager:
         PP: 0=-10dB, 1=-6dB, 2=-4dB, 3=-2dB, 4=0dB.
         Range 0x0 - 0x4 (Default: 4)
         """
-        return self.app_config["coordinator"].get("power_level","4")
+        return self.app_config.get("coordinator", {}).get("power_level","4")
     
     @property
     def coordinator_power_mode(self):
@@ -208,7 +208,7 @@ class ConfigurationManager:
         margin and range.
         Default: 1
         """
-        return self.app_config["coordinator"].get("power_mode","1")
+        return self.app_config.get("coordinator", {}).get("power_mode","1")
     
     @property
     def coordinator_encryption_enable(self):
@@ -216,7 +216,7 @@ class ConfigurationManager:
         Enable or disable ZigBee encryption.
         Default: 0
         """
-        return self.app_config["coordinator"].get("encryption_enable","0")
+        return self.app_config.get("coordinator", {}).get("encryption_enable","0")
     
     
     @property
@@ -226,7 +226,7 @@ class ConfigurationManager:
         security key unencrypted during joining, Bit1 = Use Trust Center.
         Range 0x0 - 0x3 (Default: 0)
         """
-        return self.app_config["coordinator"].get("encryption_options","0")
+        return self.app_config.get("coordinator", {}).get("encryption_options","0")
     
     @property
     def coordinator_encryption_key(self):
@@ -235,7 +235,7 @@ class ConfigurationManager:
         This register can not be read.
         0 - 32 hexadecimal characters (Default: '')
         """
-        return self.app_config["coordinator"].get("encryption_key",'""')
+        return self.app_config.get("coordinator", {}).get("encryption_key", "")
     
     @property
     def coordinator_network_encryption_key(self):
@@ -245,7 +245,7 @@ class ConfigurationManager:
         key (recommended). This register can not be read.
         0 - 32 hexadecimal characters (Default: '')
         """
-        return self.app_config["coordinator"].get("network_encryption_key",'""')
+        return self.app_config.get("coordinator", {}).get("network_encryption_key", "")
     
     @property
     def coordinator_parity(self):
@@ -253,7 +253,7 @@ class ConfigurationManager:
         Set/read the serial interface parity. 0=none, 1=even, 2=odd.
         Range 0x0 - 0x2 (Default: 0)
         """
-        return self.app_config["coordinator"].get("parity","0")
+        return self.app_config.get("coordinator", {}).get("parity","0")
     
     @property
     def coordinator_stop_bits(self):
@@ -261,7 +261,7 @@ class ConfigurationManager:
         Set/read the serial interface stop bits. 0=1 stop bit, 1=2 stop bits.
         Range 0x0 - 0x1 (Default: 0)
         """
-        return self.app_config["coordinator"].get("stop_bits","0")
+        return self.app_config.get("coordinator", {}).get("stop_bits","0")
 
     @property
     def coordinator_DIO7_configuration(self):
@@ -278,7 +278,7 @@ class ConfigurationManager:
         7 = RS-485 Enable High
         Default = 1
         """
-        return self.app_config["coordinator"].get("DIO7_configuration","1")
+        return self.app_config.get("coordinator", {}).get("DIO7_configuration","1")
 
     @property
     def coordinator_DIO6_configuration(self):
@@ -293,7 +293,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default = 0
         """
-        return self.app_config["coordinator"].get("DIO6_configuration","1")
+        return self.app_config.get("coordinator", {}).get("DIO6_configuration","1")
 
     @property
     def coordinator_API_enable(self):
@@ -303,7 +303,7 @@ class ConfigurationManager:
         2 = API enabled, with escaped characters
         Default: 1
         """
-        return self.app_config["coordinator"].get("API_enable","1")
+        return self.app_config.get("coordinator", {}).get("API_enable","1")
 
     @property
     def coordinator_API_output_mode(self):
@@ -313,7 +313,7 @@ class ConfigurationManager:
           plus received ZDO requests are passed out the UART.
         Default: 0
         """
-        return self.app_config["coordinator"].get("API_output_mode","0")
+        return self.app_config.get("coordinator", {}).get("API_output_mode","0")
     
     @property
     def coordinator_cyclic_sleep_period(self):
@@ -325,7 +325,7 @@ class ConfigurationManager:
         message for a sleeping child.
         Range 0x20 - 0xAF0 (Default: 20)
         """
-        return self.app_config["coordinator"].get("cyclic_sleep_period","20")
+        return self.app_config.get("coordinator", {}).get("cyclic_sleep_period","20")
     
     @property
     def coordinator_number_of_cyclic_sleep_periods(self):
@@ -337,7 +337,7 @@ class ConfigurationManager:
         of 5 seconds. i.e. if SN=15, SP=0x64, the timeout is 45 seconds.
         Range 0x1 - 0xFFFF (Default: 1)
         """
-        return self.app_config["coordinator"].get("number_of_cyclic_sleep_periods","1")
+        return self.app_config.get("coordinator", {}).get("number_of_cyclic_sleep_periods","1")
     
     @property
     def coordinator_AD0_DIO0_configuration(self):
@@ -353,7 +353,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 1
         """
-        return self.app_config["coordinator"].get("AD0_DIO0_configuration","1")
+        return self.app_config.get("coordinator", {}).get("AD0_DIO0_configuration","1")
 
     @property
     def coordinator_AD1_DIO1_configuration(self):
@@ -368,7 +368,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 0
         """
-        return self.app_config["coordinator"].get("AD1_DIO1_configuration","0")
+        return self.app_config.get("coordinator", {}).get("AD1_DIO1_configuration","0")
 
     @property
     def coordinator_AD2_DIO2_configuration(self):
@@ -383,7 +383,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 0
         """
-        return self.app_config["coordinator"].get("AD2_DIO2_configuration","0")
+        return self.app_config.get("coordinator", {}).get("AD2_DIO2_configuration","0")
     
     @property
     def coordinator_AD3_DIO3_configuration(self):
@@ -398,7 +398,8 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 0
         """
-        return self.app_config["coordinator"].get("AD3_DIO3_configuration","0")
+        return self.app_config.get("coordinator", {}).get("AD3_DIO3_configuration","0")
+
 
     @property
     def coordinator_DIO4_configuration(self):
@@ -413,7 +414,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 0
         """
-        return self.app_config["coordinator"].get("DIO4_configuration","0")
+        return self.app_config.get("coordinator", {}).get("DIO4_configuration", "0")
 
     @property
     def coordinator_DIO5_configuration(self):
@@ -429,7 +430,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 1
         """
-        return self.app_config["coordinator"].get("DIO5_configuration","1")
+        return self.app_config.get("coordinator", {}).get("DIO5_configuration", "1")
 
     @property
     def coordinator_DIO10_PWM0_configuration(self):
@@ -444,7 +445,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 1
         """
-        return self.app_config["coordinator"].get("DIO10_PWM0_configuration","1")
+        return self.app_config.get("coordinator", {}).get("DIO10_PWM0_configuration", "1")
 
     @property
     def coordinator_DIO11_configuration(self):
@@ -459,7 +460,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 0
         """
-        return self.app_config["coordinator"].get("DIO11_configuration","0")
+        return self.app_config.get("coordinator", {}).get("DIO11_configuration", "0")
 
     @property
     def coordinator_DIO12_configuration(self):
@@ -474,7 +475,7 @@ class ConfigurationManager:
         5 = Digital Output High
         Default: 0
         """
-        return self.app_config["coordinator"].get("DIO12_configuration","0")
+        return self.app_config.get("coordinator", {}).get("DIO12_configuration", "0")
 
 
     @property
@@ -488,7 +489,7 @@ class ConfigurationManager:
         (3)-AD1/DIO1, (2)-AD2/DIO2, (1)-AD3/DIO3, (0)-DIO4
         Range 0x0 - 0x3FFF (Default: 1FFF)
         """
-        return self.app_config["coordinator"].get("pull_up_resistor_enable","1FFF")
+        return self.app_config.get("coordinator", {}).get("pull_up_resistor_enable", "1FFF")
     
     @property
     def coordinator_associate_LED_blink_time(self):
@@ -498,7 +499,7 @@ class ConfigurationManager:
         network. Setting LT to 0 will use the default blink time (500ms).
         Range 0x0A - 0xFF (Default: 0)
         """
-        return self.app_config["coordinator"].get("associate_LED_blink_time","0")
+        return self.app_config.get("coordinator", {}).get("associate_LED_blink_time", "0")
     
     @property
     def coordinator_rssi_pwm_timer(self):
@@ -508,7 +509,7 @@ class ConfigurationManager:
         each received packet or APS acknowledgment and is shut off when the timer expires.
         Range 0x0 - 0xFF (Default: 28)
         """
-        return self.app_config["coordinator"].get("rssi_pwm_timer","28")
+        return self.app_config.get("coordinator", {}).get("rssi_pwm_timer", "28")
     
     @property
     def coordinator_device_options(self):
@@ -516,7 +517,7 @@ class ConfigurationManager:
         Bit0 - Reserved. Bit1 - Reserved. Bit2 - Reserved. Bit3 - Disable NULL Transport Key.
         Range 0x0 - 0xFF (Default: 1)
         """
-        return self.app_config["coordinator"].get("device_options","1")
+        return self.app_config.get("coordinator", {}).get("device_options", "1")
 
     @property
     def coordinator_IO_sampling_rate(self):
@@ -526,7 +527,7 @@ class ConfigurationManager:
         IO Samples are transmitted to the address specified by DH+DL.
         Range 0x32 - 0xFFFF (Default: 0)
         """
-        return self.app_config["coordinator"].get("IO_sampling_rate","0")
+        return self.app_config.get("coordinator", {}).get("IO_sampling_rate", "0")
     
     @property
     def coordinator_digital_IO_change_detection(self):
@@ -536,7 +537,7 @@ class ConfigurationManager:
         sample is immediately transmitted to the address specified by DH+DL.
         Range 0x0 - 0xFFFF (Default: 0)
         """
-        return self.app_config["coordinator"].get("digital_IO_change_detection","0")
+        return self.app_config.get("coordinator", {}).get("digital_IO_change_detection", "0")
     
     @property
     def coordinator_supply_voltage_high_threshold(self):
@@ -546,8 +547,7 @@ class ConfigurationManager:
         IO sample packet. The supply voltage is sampled every 1.1 seconds.
         Range 0x0 - 0xFFFF (Default: 0)
         """
-        return self.app_config["coordinator"].get("supply_voltage_high_threshold","0")
-
+        return self.app_config.get("coordinator", {}).get("supply_voltage_high_threshold", "0")
     @property
     def mqtt_broker(self):
         return self.app_config["mqtt_broker"]
@@ -558,7 +558,7 @@ class ConfigurationManager:
     
     @property
     def coordinator_reset_pin(self):
-        return self.app_config["coordinator"]["reset_pin"]
+        return self.app_config.get("coordinator", {})["reset_pin"]
     
     @property
     def status_light_pin(self):
