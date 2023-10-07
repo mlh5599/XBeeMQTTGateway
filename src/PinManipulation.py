@@ -3,7 +3,7 @@ import time
 import platform
 
 if platform.system() == 'Linux' and platform.machine() == 'armv7l':
-    import pigpio
+    import pigpio  # pyright: ignore
 else:
     import FakePigpio as pigpio
 
