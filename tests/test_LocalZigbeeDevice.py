@@ -209,6 +209,7 @@ def test_EncryptionEnabled_No_Change():
     assert result is False
 
 
+
 # @patch('LocalZigbeeDevice.XBeeDevice')
 # def test_configure_coordinator(mock_device):
 #     mock_device_instance = MagicMock()
