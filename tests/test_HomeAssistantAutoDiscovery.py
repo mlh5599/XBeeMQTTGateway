@@ -110,7 +110,7 @@ class TestAutoDiscovery:
         # Call the function with the mock device
         perform_auto_discovery(remote_device)
 
-        # # Verify that publish_device_config and publish_raw_adc were called 
+        # # Verify that publish_device_config and publish_raw_adc were called
         # with the expected arguments
         # expected_calls = [
         #     # Expected call for publish_device_config for channel1
@@ -123,7 +123,7 @@ class TestAutoDiscovery:
         #         __name__='publish_raw_adc',
         #         call_args=(remote_device, 'channel1'),
         #     ),
-            
+
         #     # Expected call for publish_raw_adc for channel2
         #     Mock().configure_mock(
         #         __name__='publish_raw_adc',
