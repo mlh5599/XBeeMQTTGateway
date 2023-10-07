@@ -1,8 +1,7 @@
 import os
 import pytest
-from ConfigurationManager import ConfigurationManager
+from configmanager import ConfigurationManager
 import json
-from unittest.mock import MagicMock, patch
 
 test_config_data_non_defaults = {
     "mqtt_broker": "MQTT.HagueHome.lan",
@@ -60,8 +59,6 @@ test_config_data_non_defaults = {
     }
 }
 
-
-
 config_data = {
     "mqtt_broker": "MQTT.HagueHome.lan",
     "mqtt_port": 1883,
@@ -109,11 +106,13 @@ def test_load_config_success():
     # Delete the temporary config file
     os.remove(config_path)
 
+
 def test_load_config_file_not_found():
     with pytest.raises(FileNotFoundError):
         cm = ConfigurationManager("non_existent_config.json")
         cm.load_config()
-        
+
+
 def test_load_config_invalid_json(tmp_path):
     # Create a temporary config file with invalid JSON
     invalid_json = '{"key": "value"'
@@ -180,6 +179,7 @@ def test_load_config_no_defaults():
     assert cm.mqtt_broker == "MQTT.HagueHome.lan"
     assert cm.mqtt_port == 1883
 
+
 def test_load_config_all_defaults():
     cm = ConfigurationManager("non_existent_config.json")
     cm.app_config = {}
@@ -230,4 +230,3 @@ def test_load_config_all_defaults():
     assert cm.coordinator_IO_sampling_rate == "0"
     assert cm.coordinator_digital_IO_change_detection == "0"
     assert cm.coordinator_supply_voltage_high_threshold == "0"
-

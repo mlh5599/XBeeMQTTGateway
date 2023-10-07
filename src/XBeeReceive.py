@@ -1,16 +1,17 @@
-from digi.xbee.models.address import XBee64BitAddress
 from digi.xbee.devices import RemoteXBeeDevice
-from digi.xbee.io import IOSample, IOLine
+from digi.xbee.io import IOSample
 import logging
 
+
 class XBeeReceiveBase():
-    
-    def __init__(self, remote_device : RemoteXBeeDevice):
+
+    def __init__(self, remote_device: RemoteXBeeDevice):
         self.remote_device = remote_device
+
 
 class XBeeIOSampleReceive(XBeeReceiveBase):
 
-    def __init__(self, remote_device : RemoteXBeeDevice, io_sample : IOSample):
+    def __init__(self, remote_device: RemoteXBeeDevice, io_sample: IOSample):
         XBeeReceiveBase.__init__(self, remote_device)
         self.io_sample = io_sample
 
@@ -28,7 +29,7 @@ class XBeeIOSampleReceive(XBeeReceiveBase):
             for line in self.io_sample.analog_values:
                 analog_value = self.io_sample.get_analog_value(line)
                 value_string = f"{value_string}{line} : {analog_value}, "
-                
+
             value_string = value_string.rstrip(", ")
             value_string = f"{value_string}],"
 
@@ -38,11 +39,9 @@ class XBeeIOSampleReceive(XBeeReceiveBase):
             for line in self.io_sample.digital_values:
                 digital_value = self.io_sample.get_digital_value(line)
                 value_string = f"{value_string}{line} : {digital_value}, "
-                
+
             value_string = value_string.rstrip(", ")
             value_string = f"{value_string}]"
-        
+
         value_string = f"{value_string} }}"
         logging.debug(value_string)
-
-

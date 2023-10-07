@@ -1,6 +1,7 @@
 from LogHelper import SetLogLevel
 import logging
 
+
 def test_SetLogLevel():
 
     logger = logging.getLogger()
