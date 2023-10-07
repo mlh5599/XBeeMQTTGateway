@@ -27,7 +27,7 @@ class XBeeDeviceManager():
             channels[binary_sensor_channel.io_line] = binary_sensor_channel
             binary_sensor_channel.last_reading = io_sample.get_analog_value(
                 channel)
-    
+
         device = RemoteIOSensorDevice(remote_xbee.get_node_id(),
                                       str(remote_xbee.get_64bit_addr()),
                                       channels)

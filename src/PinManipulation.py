@@ -24,4 +24,3 @@ def ResetXBee(configuration_manager):
         time.sleep(1)
         pi.write(configuration_manager.xbee_reset_pin, pigpio.HIGH)
         time.sleep(2)
-

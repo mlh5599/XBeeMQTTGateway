@@ -78,4 +78,3 @@ def publish_device_config(remote_xbee_device, channel):
                     to topic : {discovery_topic}")
     logging.debug(json_string)
     MQTTHelper.client.publish(discovery_topic, json_string)
-    
