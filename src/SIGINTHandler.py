@@ -1,11 +1,13 @@
 import logging
 import signal
 
+
 def RegisterSIGINTHandler():
     logging.debug("Registering SIGINT handler")
     handler = SIGINT_handler()
     signal.signal(signal.SIGINT, handler.signal_handler)
     return handler
+
 
 class SIGINT_handler():
 

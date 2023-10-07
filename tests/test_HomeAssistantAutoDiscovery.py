@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, Mock
-from HomeAssistantAutoDiscovery import perform_auto_discovery, publish_raw_adc, publish_device_config
-from digi.xbee.io import IOLine
+from HomeAssistantAutoDiscovery import perform_auto_discovery
+
 
 class TestAutoDiscovery:
 
@@ -23,7 +23,8 @@ class TestAutoDiscovery:
     #     # Call the function with the mock device and channel
     #     publish_raw_adc(remote_device, 'channel1')
 
-    #     # Verify that MQTTHelper.client.publish was called with the expected arguments
+    #     # Verify that MQTTHelper.client.publish was called with the expected
+    #       arguments
     #     expected_discovery_topic = (
     #         "homeassistant/binary_sensor/xbee-0x12345678/IOLine-DIO0_AD0-raw/config"
     #     )
@@ -67,7 +68,8 @@ class TestAutoDiscovery:
     #     # Call the function with the mock device and channel
     #     publish_device_config(remote_device, 'channel1')
 
-    #     # Verify that MQTTHelper.client.publish was called with the expected arguments
+    #     # Verify that MQTTHelper.client.publish was called with the expected\
+    # arguments
     #     expected_discovery_topic = (
     #         "homeassistant/binary_sensor/xbee-0x12345678/IOLine-DIO0_AD0/config"
     #     )
@@ -90,11 +92,11 @@ class TestAutoDiscovery:
     #         str(expected_sensor_payload),
     #     )
 
-
-    @patch('time.sleep', side_effect=lambda x: None)  # Mock time.sleep to do nothing
+    @patch('time.sleep', side_effect=lambda x: None)
     @patch('HomeAssistantAutoDiscovery.publish_device_config')
     @patch('HomeAssistantAutoDiscovery.publish_raw_adc')
-    def test_perform_auto_discovery(self, mock_publish_raw_adc, mock_publish_device_config, mock_sleep):
+    def test_perform_auto_discovery(self, mock_publish_raw_adc,
+                                    mock_publish_device_config, mock_sleep):
         # Create a mock instance of RemoteIOSensorDevice
         remote_device = Mock()
         remote_device.remote_address = "12345678"
@@ -108,7 +110,8 @@ class TestAutoDiscovery:
         # Call the function with the mock device
         perform_auto_discovery(remote_device)
 
-        # # Verify that publish_device_config and publish_raw_adc were called with the expected arguments
+        # # Verify that publish_device_config and publish_raw_adc were called 
+        # with the expected arguments
         # expected_calls = [
         #     # Expected call for publish_device_config for channel1
         #     Mock().configure_mock(
@@ -132,6 +135,7 @@ class TestAutoDiscovery:
 
         # assert mock_publish_device_config.mock_calls == expected_calls
         # assert mock_publish_raw_adc.mock_calls == expected_calls
+
 
 if __name__ == '__main__':
     pytest.main()

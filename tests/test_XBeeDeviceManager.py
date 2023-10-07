@@ -1,9 +1,9 @@
 import pytest
 from unittest.mock import patch, Mock
 from XBeeDeviceManager import XBeeDeviceManager
-from RemoteSensorDevice import ADCBinarySensorChannel, RemoteIOSensorDevice, XBeeSensorDevice
-from digi.xbee.io import IOSample,IOLine
+from digi.xbee.io import IOSample, IOLine
 from digi.xbee.devices import RemoteXBeeDevice
+
 
 class TestXBeeDeviceManager:
 
@@ -23,7 +23,8 @@ class TestXBeeDeviceManager:
         cls.mock_io_sample = Mock(spec=IOSample)
         cls.mockIOLine1 = Mock(spec=IOLine)
         cls.mockIOLine2 = Mock(spec=IOLine)
-        cls.mock_io_sample.analog_values = {cls.mockIOLine1:1, cls.mockIOLine2:2}
+        cls.mock_io_sample.analog_values = {cls.mockIOLine1: 1,
+                                            cls.mockIOLine2: 2}
         cls.mock_remote_xbee = Mock(spec=RemoteXBeeDevice)
         cls.mock_remote_xbee.get_64bit_addr.return_value = "19734682"
         cls.mock_remote_xbee.get_node_id.return_value = "TestDevice"
@@ -37,20 +38,11 @@ class TestXBeeDeviceManager:
     def test_register_device(self, mock_perform_auto_discovery, mock_print):
 
         # Call the RegisterDevice method
-        result = XBeeDeviceManager.RegisterDevice(self.mock_io_sample, self.mock_remote_xbee)
-
-        # Verify that RemoteIOSensorDevice was created with the expected arguments
-        # expected_channels = {
-        #     1: ADCBinarySensorChannel(self.mockIOLine1, self.mock_remote_xbee.return_value, f"myhome/{self.mock_remote_xbee.get_64bit_addr()}/{str(self.mockIOLine1).replace('.','-')}/state", 501, 1, "sensor", 500, False),
-        #     2: ADCBinarySensorChannel(2, 2, "myhome/12345678/2/state", "myhome/12345678/2/raw_adc_value", 1, "sensor", 500, False),
-        #     3: ADCBinarySensorChannel(3, 3, "myhome/12345678/3/state", "myhome/12345678/3/raw_adc_value", 1, "sensor", 500, False),
-        # }
-        # expected_device = RemoteIOSensorDevice("TestDevice", "19734682", expected_channels)
+        result = XBeeDeviceManager.RegisterDevice(self.mock_io_sample,
+                                                  self.mock_remote_xbee)
 
         assert result.name == "TestDevice"
         assert result.remote_address == "19734682"
-
-
 
     @patch('builtins.print')  # Mock the print function
     def test_get_registered_device_found(self, mock_print):
@@ -65,7 +57,7 @@ class TestXBeeDeviceManager:
 
     @patch('builtins.print')  # Mock the print function
     def test_get_registered_device_not_found(self, mock_print):
-        
+
         # Set the mock dictionary as __registered_devices
         XBeeDeviceManager.registered_devices = self.mock_registered_devices
 
@@ -73,6 +65,7 @@ class TestXBeeDeviceManager:
         result = XBeeDeviceManager.GetRegisteredDevice("99999999")
 
         assert result is None  # No device found
+
 
 if __name__ == '__main__':
     pytest.main()

@@ -1,5 +1,6 @@
 import logging
 
+
 def SetLogLevel(log_level):
     logging.debug(f'Setting log level to {log_level}')
 

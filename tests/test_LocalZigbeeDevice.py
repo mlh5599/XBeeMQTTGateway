@@ -1,5 +1,6 @@
-from unittest.mock import MagicMock, patch, PropertyMock
-from LocalZigbeeDevice import *
+from unittest.mock import MagicMock, PropertyMock
+from LocalZigbeeDevice import SetNodeID, SetPanID, SetScanChannels, \
+    SetEncryptionOptions, GetEncryptionEnabled
 
 testConfigs = {
     "mqtt_broker": "MQTT.HagueHome.lan",
@@ -38,7 +39,8 @@ def test_SetNodeID_With_Change():
     device_mock.set_node_id.assert_called_once_with("COORDINATOR")
 
     # Assert that changes were written
-    assert result == True
+    assert result is True
+
 
 def test_SetNodeID_No_Change():
     # Create a mock XBeeDevice object
@@ -55,7 +57,8 @@ def test_SetNodeID_No_Change():
     device_mock.set_node_id.assert_not_called()
 
     # Assert that changes were written
-    assert result == False
+    assert result is False
+
 
 def test_SetPanID_With_Change():
     # Create a mock XBeeDevice object
@@ -63,7 +66,8 @@ def test_SetPanID_With_Change():
     device_mock.get_pan_id.return_value = b'\x1234'
     # Create a mock ConfigurationManager object
     configuration_manager_mock = MagicMock()
-    type(configuration_manager_mock).coordinator_pan_id = PropertyMock(return_value="01")
+    type(configuration_manager_mock).coordinator_pan_id = \
+        PropertyMock(return_value="01")
 
     # Call the SetPanID function
     result = SetPanID(device_mock, configuration_manager_mock)
@@ -72,7 +76,8 @@ def test_SetPanID_With_Change():
     device_mock.set_pan_id.assert_called_once_with(b'\x01')
 
     # Assert that changes were written
-    assert result == True
+    assert result is True
+
 
 def test_SetPanID_No_Change():
     # Create a mock XBeeDevice object
@@ -89,7 +94,82 @@ def test_SetPanID_No_Change():
     device_mock.set_pan_id.assert_not_called()
 
     # Assert that changes were written
-    assert result == False
+    assert result is False
+
+
+def test_SetScanChannels_With_Change():
+    # Create a mock XBeeDevice object
+    device_mock = MagicMock()
+    device_mock.get_scanning_channels.return_value = b'\x1234'
+    # Create a mock ConfigurationManager object
+    configuration_manager_mock = MagicMock()
+    configuration_manager_mock.coordinator_scan_channels = "01"
+
+    # Call the SetScanChannels function
+    result = SetScanChannels(device_mock, configuration_manager_mock)
+
+    # Assert that the scan channels were set to the coordinator node identifier
+    device_mock.set_scanning_channels.assert_called_once_with(b'\x01')
+
+    # Assert that changes were written
+    assert result is True
+
+
+def test_SetScanChannels_No_Change():
+    # Create a mock XBeeDevice object
+    device_mock = MagicMock()
+    device_mock.get_scanning_channels.return_value = "4321"
+    # Create a mock ConfigurationManager object
+    configuration_manager_mock = MagicMock()
+    configuration_manager_mock.coordinator_scan_channels = "4321"
+
+    # Call the SetScanChannels function
+    result = SetScanChannels(device_mock, configuration_manager_mock)
+
+    # Assert that the scan channels were set to the coordinator node identifier
+    device_mock.set_scanning_channels.assert_not_called()
+
+    # Assert that changes were written
+    assert result is False
+
+
+def test_SetEncryptionOptions_With_Change():
+    # Create a mock XBeeDevice object
+    device_mock = MagicMock()
+    device_mock.get_encryption_options.return_value = b'\x1234'
+    # Create a mock ConfigurationManager object
+    configuration_manager_mock = MagicMock()
+    configuration_manager_mock.coordinator_encryption_options = "01"
+
+    # Call the SetEncryptionOptions function
+    result = SetEncryptionOptions(device_mock, configuration_manager_mock)
+
+    # Assert that the encryption options were set to the coordinator node
+    # identifier
+    device_mock.set_encryption_options.assert_called_once_with(b'\x01')
+
+    # Assert that changes were written
+    assert result is True
+
+
+def test_SetEncryptionOptions_No_Change():
+    # Create a mock XBeeDevice object
+    device_mock = MagicMock()
+    device_mock.get_encryption_options.return_value = b'\x11'
+    # Create a mock ConfigurationManager object
+    configuration_manager_mock = MagicMock()
+    configuration_manager_mock.coordinator_encryption_options = b'\x11'
+
+    # Call the SetEncryptionOptions function
+    result = SetEncryptionOptions(device_mock, configuration_manager_mock)
+
+    # Assert that the encryption options were set to the coordinator node
+    # identifier
+    device_mock.set_encryption_options.assert_not_called()
+
+    # Assert that changes were written
+    assert result is False
+
 
 def test_EncryptionEnabled_With_Change():
     # Create a mock XBeeDevice object
@@ -102,11 +182,13 @@ def test_EncryptionEnabled_With_Change():
     # Call the EncryptionEnabled function
     result = GetEncryptionEnabled(device_mock, configuration_manager_mock)
 
-    # Assert that the encryption enabled was set to the coordinator node identifier
+    # Assert that the encryption enabled was set to the coordinator node
+    # identifier
     device_mock.set_encryption_enabled.assert_called_once_with(True)
 
     # Assert that changes were written
-    assert result == True
+    assert result is True
+
 
 def test_EncryptionEnabled_No_Change():
     # Create a mock XBeeDevice object
@@ -119,28 +201,13 @@ def test_EncryptionEnabled_No_Change():
     # Call the EncryptionEnabled function
     result = GetEncryptionEnabled(device_mock, configuration_manager_mock)
 
-    # Assert that the encryption enabled was set to the coordinator node identifier
+    # Assert that the encryption enabled was set to the coordinator node
+    # identifier
     device_mock.set_encryption_enabled.assert_not_called()
 
     # Assert that changes were written
-    assert result == False
+    assert result is False
 
-def test_SetEncryptionOptions_With_Change():
-    # Create a mock XBeeDevice object
-    device_mock = MagicMock()
-    device_mock.get_encryption_options.return_value = "02"
-    # Create a mock ConfigurationManager object
-    configuration_manager_mock = MagicMock()
-    configuration_manager_mock.network_encryption_options = "03"
-
-    # Call the SetEncryptionOptions function
-    result = SetEncryptionOptions(device_mock, configuration_manager_mock)
-
-    # Assert that the encryption options were set to the coordinator node identifier
-    device_mock.set_encryption_options.assert_called_once_with(b'\x03')
-
-    # Assert that changes were written
-    assert result == True
 
 # @patch('LocalZigbeeDevice.XBeeDevice')
 # def test_configure_coordinator(mock_device):
