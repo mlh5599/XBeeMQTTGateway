@@ -4,7 +4,7 @@
     "status_light_pin": 24,
     "log_level": "DEBUG",
     "coordinator": {
-        "port": "COM4",
+        "port": "/dev/ttyUSB0",
         "baud_rate": 9600,
         "pan_id": "2000",
         "scan_channels": "7FFF",

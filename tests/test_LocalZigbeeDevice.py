@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, PropertyMock
 from LocalZigbeeDevice import SetNodeID, SetPanID, SetScanChannels, \
-    SetEncryptionOptions, GetEncryptionEnabled
+    SetEncryptionOptions, GetEncryptionEnabled, SetZigbeeStackProfile, \
+    SetNodeJoinTime
 
 testConfigs = {
     "mqtt_broker": "MQTT.HagueHome.lan",
@@ -208,31 +209,76 @@ def test_EncryptionEnabled_No_Change():
     # Assert that changes were written
     assert result is False
 
-# @patch('LocalZigbeeDevice.XBeeDevice')
-# def test_configure_coordinator(mock_device):
-#     mock_device_instance = MagicMock()
-#     mock_device.return_value = mock_device_instance
-#     mock_device.get_encryption_options.return_value = "4321"
-#     mock_device.get_node_join_time.return_value = 5
-#     mock_device.get_pan_id.return_value = "9999"
-#     mock_device.get_node_id.return_value = "NoID"
-#     mock_device.get_encryption_enabled.return_value = False
-#     mock_device.get_network_join_time.return_value = 5
 
-#     mock_config_manager = MagicMock()
-#     mock_config_manager.coordinator_pan_id = "1234"
-#     mock_config_manager.coordinator_scan_channels = "11-26"
-#     mock_config_manager.coordinator_node_join_time = 10
-#     mock_config_manager.coordinator_node_identifier = "test"
-#     mock_config_manager.network_encryption_options = True
-#     mock_config_manager.network_encryption_key = "testkey"
-#     mock_config_manager.network_node_join_time = 10
+def test_SetZigbeeStackProfile_With_Change():
+    # Create a mock XBeeDevice object
+    device_mock = MagicMock()
+    device_mock.get_zigbee_stack_profile.return_value = "NoProfile"
+    # Create a mock ConfigurationManager object
+    configuration_manager_mock = MagicMock()
+    configuration_manager_mock.coordinator_zigbee_stack_profile = "0x02"
 
-#     ConfigureCoordinator(mock_config_manager, mock_device_instance)
+    # Call the SetZigbeeStackProfile function
+    result = SetZigbeeStackProfile(device_mock, configuration_manager_mock)
 
-#     mock_device_instance.set_node_id.assert_called_once_with(mock_config_manager.coordinator_node_identifier)
-#     mock_device_instance.set_pan_id.assert_called_once_with(mock_config_manager.coordinator_pan_id)
-#     mock_device_instance.set_encryption_enabled.assert_called_once_with(mock_config_manager.coordinator_encryption_enable)
-#     mock_device_instance.set_encryption_options.assert_called_once_with(mock_config_manager.network_encryption_options)
-#     mock_device_instance.set_node_join_time.assert_called_once_with(mock_config_manager.network_node_join_time)
-#     mock_device_instance.set_network_encryption_key.assert_called_once_with(mock_config_manager.network_encryption_key)
+    # Assert that the Zigbee stack profile was set to the coordinator
+    # Zigbee stack profile
+    device_mock.set_zigbee_stack_profile.assert_called_once_with("0x02")
+
+    # Assert that changes were written
+    assert result is True
+
+
+def test_SetZigbeeStackProfile_No_Change():
+    # Create a mock XBeeDevice object
+    device_mock = MagicMock()
+    device_mock.get_zigbee_stack_profile.return_value = "0x02"
+    # Create a mock ConfigurationManager object
+    configuration_manager_mock = MagicMock()
+    configuration_manager_mock.coordinator_zigbee_stack_profile = "0x02"
+
+    # Call the SetZigbeeStackProfile function
+    result = SetZigbeeStackProfile(device_mock, configuration_manager_mock)
+
+    # Assert that the Zigbee stack profile was set to the coordinator
+    # Zigbee stack profile
+    device_mock.set_zigbee_stack_profile.assert_not_called()
+
+    # Assert that changes were written
+    assert result is False
+    
+
+def test_SetNodeJoinTime_With_Change():
+    # Create a mock XBeeDevice object
+    device_mock = MagicMock()
+    device_mock.get_node_join_time.return_value = "00"
+    # Create a mock ConfigurationManager object
+    configuration_manager_mock = MagicMock()
+    configuration_manager_mock.coordinator_node_join_time = "FF"
+
+    # Call the SetNodeJoinTime function
+    result = SetNodeJoinTime(device_mock, configuration_manager_mock)
+
+    # Assert that the node join time was set to the coordinator node join time
+    device_mock.set_node_join_time.assert_called_once_with("FF")
+
+    # Assert that changes were written
+    assert result is True
+
+
+def test_SetNodeJoinTime_No_Change():
+    # Create a mock XBeeDevice object
+    device_mock = MagicMock()
+    device_mock.get_node_join_time.return_value = "FF"
+    # Create a mock ConfigurationManager object
+    configuration_manager_mock = MagicMock()
+    configuration_manager_mock.coordinator_node_join_time = "FF"
+
+    # Call the SetNodeJoinTime function
+    result = SetNodeJoinTime(device_mock, configuration_manager_mock)
+
+    # Assert that the node join time was set to the coordinator node join time
+    device_mock.set_node_join_time.assert_not_called()
+
+    # Assert that changes were written
+    assert result is False

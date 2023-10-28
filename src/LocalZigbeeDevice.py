@@ -49,9 +49,18 @@ def ConfigureCoordinator(device, configuration_manager):
 
 
 def SetParametersFromConfig(device, configuration_manager):
+    
     writeChanges = SetPanID(device, configuration_manager)
 
     writeChanges = SetScanChannels(device, configuration_manager)
+
+    writeChanges = SetScanDuration(device, configuration_manager)
+
+    writeChanges = SetZigbeeStackProfile(device, configuration_manager)
+
+    writeChanges = SetNodeJoinTime(device, configuration_manager)
+
+    writeChanges = SetDestinationAddressHigh(device, configuration_manager)
 
     writeChanges = SetNodeID(device, configuration_manager)
 
@@ -110,6 +119,107 @@ def SetScanChannels(device, configuration_manager):
         scan_channels_bytes = bytes.fromhex(
             configuration_manager.coordinator_scan_channels)
         device.set_scanning_channels(scan_channels_bytes)
+        device_updated = True
+    return device_updated
+
+
+def SetScanDuration(device, configuration_manager):
+    """
+    Sets the scan duration of the local Zigbee device to the coordinator
+    scan duration.
+
+    Args:
+        device (XBeeDevice): The local Zigbee device.
+        configuration_manager (ConfigurationManager):
+        The configuration manager.
+
+    Returns:
+        bool: True if changes were written to the device, False otherwise.
+    """
+    device_updated = False
+    if (device.get_scan_duration() !=
+       configuration_manager.coordinator_scan_duration):
+        logging.debug(
+            f"Setting scan duration to \
+                {configuration_manager.coordinator_scan_duration}")
+        scan_duration_bytes = bytes.fromhex(
+            configuration_manager.coordinator_scan_duration)
+        device.set_scan_duration(scan_duration_bytes)
+        device_updated = True
+    return device_updated
+
+
+def SetZigbeeStackProfile(device, configuration_manager):
+    """
+    Sets the Zigbee stack profile of the local Zigbee device to the
+    coordinator Zigbee stack profile.
+
+    Args:
+        device (XBeeDevice): The local Zigbee device.
+        configuration_manager (ConfigurationManager):
+        The configuration manager.
+
+    Returns:
+        bool: True if changes were written to the device, False otherwise.
+    """
+    device_updated = False
+    if (device.get_zigbee_stack_profile() !=
+       configuration_manager.coordinator_zigbee_stack_profile):
+        logging.debug(
+            f"Setting Zigbee stack profile to \
+                 {configuration_manager.coordinator_zigbee_stack_profile}")
+        device.set_zigbee_stack_profile(
+            configuration_manager.coordinator_zigbee_stack_profile)
+        device_updated = True
+    return device_updated
+
+
+def SetNodeJoinTime(device, configuration_manager):
+    """
+    Sets the node join time of the local Zigbee device to the
+    coordinator node join time.
+
+    Args:
+        device (XBeeDevice): The local Zigbee device.
+        configuration_manager (ConfigurationManager):
+        The configuration manager.
+
+    Returns:
+        bool: True if changes were written to the device, False otherwise.
+    """
+    device_updated = False
+    if (device.get_node_join_time() !=
+       configuration_manager.coordinator_node_join_time):
+        logging.debug(
+            f"Setting node join time to \
+                 {configuration_manager.coordinator_node_join_time}")
+        device.set_node_join_time(
+            configuration_manager.coordinator_node_join_time)
+        device_updated = True
+    return device_updated
+
+
+def SetDestinationAddressHigh(device, configuration_manager):
+    """
+    Sets the destination address high of the local Zigbee device to the
+    coordinator destination address high.
+
+    Args:
+        device (XBeeDevice): The local Zigbee device.
+        configuration_manager (ConfigurationManager):
+        The configuration manager.
+
+    Returns:
+        bool: True if changes were written to the device, False otherwise.
+    """
+    device_updated = False
+    if (device.get_destination_address_high() !=
+       configuration_manager.coordinator_destination_address_high):
+        logging.debug(
+            f"Setting destination address high to \
+                 {configuration_manager.coordinator_destination_address_high}")
+        device.set_destination_address_high(
+            configuration_manager.coordinator_destination_address_high)
         device_updated = True
     return device_updated
 
@@ -183,31 +293,6 @@ def SetNodeID(device, configuration_manager):
 
         logging.debug("Setting node ID to Coordinator")
         device.set_node_id(configuration_manager.coordinator_node_identifier)
-        device_updated = True
-    return device_updated
-
-
-def SetScanDuration(device, configuration_manager):
-    """
-    Sets the scan duration of the local Zigbee device to the coordinator
-    scan duration.
-
-    Args:
-        device (XBeeDevice): The local Zigbee device.
-        configuration_manager (ConfigurationManager):
-        The configuration manager.
-
-    Returns:
-        bool: True if changes were written to the device, False otherwise.
-    """
-    device_updated = False
-    if (device.get_scan_duration() !=
-       configuration_manager.coordinator_scan_duration):
-        logging.debug(
-            f"Setting scan duration to \
-                {configuration_manager.coordinator_scan_duration}")
-        device.set_scan_duration(
-            configuration_manager.coordinator_scan_duration)
         device_updated = True
     return device_updated
 

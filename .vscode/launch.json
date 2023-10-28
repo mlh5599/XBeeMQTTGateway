@@ -17,7 +17,7 @@
             "type": "python",
             "request": "launch",
             "program": "XBee2MQTT.py",
-            "args": ["-d", "COM6", "-c", "./config.json"],
+            "args": ["-c", "./config.json"],
             "console": "integratedTerminal",
             "justMyCode": true
         }
