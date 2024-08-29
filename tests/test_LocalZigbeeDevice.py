@@ -246,7 +246,7 @@ def test_SetZigbeeStackProfile_No_Change():
 
     # Assert that changes were written
     assert result is False
-    
+
 
 def test_SetNodeJoinTime_With_Change():
     # Create a mock XBeeDevice object
