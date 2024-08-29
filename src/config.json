@@ -2,19 +2,282 @@
     "mqtt_broker": "MQTT.HagueHome.lan",
     "mqtt_port": "1883",
     "status_light_pin": 24,
-    "log_level": "DEBUG",
+    "log_level": "INFO",
     "coordinator": {
-        "port": "COM4",
+        "port": "/dev/ttyUSB0",
         "baud_rate": 9600,
-        "pan_id": "2000",
-        "scan_channels": "7FFF",
-        "scan_duration": "03",
-        "node_join_time": "FF",
-        "node_identifier": "XBeeGateway2",
-        "encryption_enable": "1",
-        "encryption_options": "0",
-        "encryption_key": "0",
-        "network_encryption_key": "0x81041771",
-        "reset_pin": 27
+        "setting": {
+            "pan_id": {
+            "key": "ID",
+            "value": "0x2000",
+            "type": "hex",
+            "read_only": false
+            },
+            "scan_channels": {
+            "key": "SC",
+            "value": "0xFFFF",
+            "type": "hex",
+            "read_only": false
+            },
+            "scan_duration": {
+            "key": "SD",
+            "value": "0x03",
+            "type": "hex",
+            "read_only": false
+            },
+            "zigbee_stack_profile": {
+            "key": "ZS",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "node_join_time": {
+            "key": "NJ",
+            "value": "0xFF",
+            "type": "hex",
+            "read_only": false
+            },
+            "destination_address_high": {
+            "key": "DH",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "destination_address_low": {
+            "key": "DL",
+            "value": "0xFFFF",
+            "type": "hex",
+            "read_only": false
+            },
+            "node_identifier": {
+            "key": "NI",
+            "value": "XBeeGateway2",
+            "type": "string",
+            "read_only": false
+            },
+            "maximum_hops": {
+            "key": "NH",
+            "value": "0x1E",
+            "type": "hex",
+            "read_only": false
+            },
+            "broadcast_radius": {
+            "key": "BH",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "many_to_many_route_broadcast_time": {
+            "key": "AR",
+            "value": "0xFF",
+            "type": "hex",
+            "read_only": false
+            },
+            "device_type_identifier": {
+            "key": "DD",
+            "value": "0x030000",
+            "type": "hex",
+            "read_only": false
+            },
+            "node_discovery_backoff": {
+            "key": "NT",
+            "value": "0x3C",
+            "type": "hex",
+            "read_only": false
+            },
+            "node_discovery_options": {
+            "key": "NO",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "pan_conflict_threshold": {
+            "key": "CR",
+            "value": "0x03",
+            "type": "hex",
+            "read_only": false
+            },
+            "power_level": {
+            "key": "PL",
+            "value": "0x04",
+            "type": "hex",
+            "read_only": false
+            },
+            "power_mode": {
+            "key": "PM",
+            "value": "0x01",
+            "type": "hex",
+            "read_only": false
+            },
+            "encryption_enable": {
+            "key": "EE",
+            "value": "0x01",
+            "type": "hex",
+            "read_only": false
+            },
+            "encryption_options": {
+            "key": "EO",
+            "value": "0x01",
+            "type": "hex",
+            "read_only": false
+            },
+            "encryption_key": {
+            "key": "KY",
+            "value": "0x012345",
+            "type": "hex",
+            "read_only": true
+            },
+            "baud_rate": {
+            "key": "BD",
+            "value": "0x03",
+            "type": "hex",
+            "read_only": false
+            },
+            "pairity": {
+            "key": "NB",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "stop_bits": {
+            "key": "SB",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "dio7_configuration": {
+            "key": "D7",
+            "value": "0x01",
+            "type": "hex",
+            "read_only": false
+            },
+            "dio6_configuration": {
+            "key": "D6",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "api_enable": {
+            "key": "AP",
+            "value": "0x01",
+            "type": "hex",
+            "read_only": false
+            },
+            "api_output_mode": {
+            "key": "AO",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "cyclic_sleep_period": {
+            "key": "SP",
+            "value": "0x0AF0",
+            "type": "hex",
+            "read_only": false
+            },
+            "number_of_sleep_periods": {
+            "key": "SN",
+            "value": "0x7889",
+            "type": "hex",
+            "read_only": false
+            },
+            "ad0_dio0_configuration": {
+            "key": "D0",
+            "value": "0x01",
+            "type": "hex",
+            "read_only": false
+            },
+            "ad1_dio1_configuration": {
+            "key": "D1",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "ad2_dio2_configuration": {
+            "key": "D2",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "ad3_dio3_configuration": {
+            "key": "D3",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "dio4_configuration": {
+            "key": "D4",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "dio5_configuration": {
+            "key": "D5",
+            "value": "0x01",
+            "type": "hex",
+            "read_only": false
+            },
+            "dio10_pwm0_configuration": {
+            "key": "P0",
+            "value": "0x01",
+            "type": "hex",
+            "read_only": false
+            },
+            "dio11_configuration": {
+            "key": "P1",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "dio12_configuration": {
+            "key": "P2",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "pull_up_resistor": {
+            "key": "PR",
+            "value": "0x1FFF",
+            "type": "hex",
+            "read_only": false
+            },
+            "associate_led_blink_time": {
+            "key": "LT",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "rssi_pwm_timer": {
+            "key": "RP",
+            "value": "0x28",
+            "type": "hex",
+            "read_only": false
+            },
+            "device_options": {
+            "key": "DO",
+            "value": "0x01",
+            "type": "hex",
+            "read_only": false
+            },
+            "io_sample_rate": {
+            "key": "IR",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "digital_io_change_detection": {
+            "key": "IC",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            },
+            "supply_voltage_high_threshold": {
+            "key": "V+",
+            "value": "0x00",
+            "type": "hex",
+            "read_only": false
+            }
+        },
+        "reset_pin": -1
     }
 }

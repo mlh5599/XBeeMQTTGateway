@@ -1,9 +1,9 @@
 import sys
 import getopt
 from SIGINTHandler import RegisterSIGINTHandler
-import LocalZigbeeDevice
+import XBee.LocalZigbeeDevice as LocalZigbeeDevice
 import MQTTHelper
-from XBeeDeviceManager import XBeeDeviceManager
+from XBee.XBeeDeviceManager import XBeeDeviceManager
 import logging
 from LogHelper import SetLogLevel
 from configmanager import ConfigurationManager
@@ -48,6 +48,8 @@ def MainProgramLoop(cm, sigint_handler):
 
             logging.debug("Connecting to MQTT broker")
             MQTTHelper.connect(cm.mqtt_broker, int(cm.mqtt_port))
+
+            # MQTTHelper.set_callback(on_message)
 
             XBeeDeviceManager()
 
