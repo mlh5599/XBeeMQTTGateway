@@ -1,4 +1,4 @@
-from RemoteSensorDevice import RemoteIOSensorDevice
+from XBee.RemoteSensorDevice import RemoteIOSensorDevice
 import json
 import MQTTHelper
 import time

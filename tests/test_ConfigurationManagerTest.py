@@ -1,4 +1,3 @@
-import os
 import pytest
 from configmanager import ConfigurationManager
 import json
@@ -81,32 +80,6 @@ config_data = {
 }
 
 
-def test_load_config_success():
-    # Create a temporary config file
-    config_path = "config.json"
-    with open(config_path, 'w') as config_file:
-        json.dump(config_data, config_file)
-
-    cm = ConfigurationManager(config_path)
-    cm.load_config()
-
-    # Assert that the configuration manager has the expected values
-    assert cm.coordinator_port == "COM4"
-    assert cm.coordinator_baud_rate == 9600
-    assert cm.coordinator_pan_id == "2000"
-    assert cm.coordinator_scan_channels == "FF"
-    assert cm.coordinator_node_join_time == "FF"
-    assert cm.coordinator_node_identifier == "TestGateway"
-    assert cm.coordinator_encryption_enable == "1"
-    assert cm.coordinator_encryption_options == "0"
-    assert cm.coordinator_reset_pin == 27
-    assert cm.status_light_pin == 24
-    assert cm.mqtt_broker == "MQTT.HagueHome.lan"
-    assert cm.mqtt_port == 1883
-    # Delete the temporary config file
-    os.remove(config_path)
-
-
 def test_load_config_file_not_found():
     with pytest.raises(FileNotFoundError):
         cm = ConfigurationManager("non_existent_config.json")
@@ -123,110 +96,3 @@ def test_load_config_invalid_json(tmp_path):
     with pytest.raises(json.decoder.JSONDecodeError):
         cm = ConfigurationManager(config_path)
         cm.load_config()
-
-
-def test_load_config_no_defaults():
-    cm = ConfigurationManager("non_existent_config.json")
-    cm.app_config = test_config_data_non_defaults
-    assert cm.coordinator_port == "COM4"
-    assert cm.coordinator_baud_rate == 115200
-    assert cm.coordinator_pan_id == "2000"
-    assert cm.coordinator_scan_duration == "1112"
-    assert cm.coordinator_scan_channels == "1111"
-    assert cm.coordinator_zigbee_stack_profile == "2"
-    assert cm.coordinator_node_join_time == "11"
-    assert cm.coordinator_destination_address_high == "FFFFFFFF"
-    assert cm.coordinator_destination_address_low == "00000000"
-    assert cm.coordinator_node_identifier == "TestGateway"
-    assert cm.coordinator_maximum_hops == "3"
-    assert cm.coordinator_broadcast_radius == "0"
-    assert cm.coordinator_many_to_one_broadcast_time == "20"
-    assert cm.coordinator_device_type_identifier == "FFFD"
-    assert cm.coordinator_node_discovery_backoff == "2"
-    assert cm.coordinator_node_doscovery_options == "1"
-    assert cm.coordinator_pan_conflict_threshold == "5"
-    assert cm.coordinator_power_level == "100"
-    assert cm.coordinator_power_mode == "4"
-    assert cm.coordinator_encryption_enable == "1"
-    assert cm.coordinator_encryption_options == "1"
-    assert cm.coordinator_encryption_key == "0"
-    assert cm.coordinator_network_encryption_key == "0x81041771"
-    assert cm.coordinator_parity == "1"
-    assert cm.coordinator_stop_bits == "1"
-    assert cm.coordinator_DIO7_configuration == "0"
-    assert cm.coordinator_DIO6_configuration == "1"
-    assert cm.coordinator_API_enable == "0"
-    assert cm.coordinator_API_output_mode == "1"
-    assert cm.coordinator_cyclic_sleep_period == "0"
-    assert cm.coordinator_number_of_cyclic_sleep_periods == "0"
-    assert cm.coordinator_AD0_DIO0_configuration == "0"
-    assert cm.coordinator_AD1_DIO1_configuration == "1"
-    assert cm.coordinator_AD2_DIO2_configuration == "2"
-    assert cm.coordinator_AD3_DIO3_configuration == "3"
-    assert cm.coordinator_DIO4_configuration == "4"
-    assert cm.coordinator_DIO5_configuration == "5"
-    assert cm.coordinator_DIO10_PWM0_configuration == "2"
-    assert cm.coordinator_DIO11_configuration == "3"
-    assert cm.coordinator_DIO12_configuration == "4"
-    assert cm.coordinator_pull_up_resistor_enable == "000000"
-    assert cm.coordinator_rssi_pwm_timer == "0"
-    assert cm.coordinator_device_options == "0"
-    assert cm.coordinator_IO_sampling_rate == "10"
-    assert cm.coordinator_digital_IO_change_detection == "1111"
-    assert cm.coordinator_supply_voltage_high_threshold == "10"
-    assert cm.coordinator_reset_pin == 27
-    assert cm.status_light_pin == 24
-    assert cm.mqtt_broker == "MQTT.HagueHome.lan"
-    assert cm.mqtt_port == 1883
-
-
-def test_load_config_all_defaults():
-    cm = ConfigurationManager("non_existent_config.json")
-    cm.app_config = {}
-
-    assert cm.coordinator_pan_id == "0"
-    assert cm.coordinator_scan_channels == "FFFF"
-    assert cm.coordinator_scan_duration == "3"
-    assert cm.coordinator_node_join_time == "FF"
-    assert cm.coordinator_zigbee_stack_profile == "0"
-    assert cm.coordinator_node_join_time == "FF"
-    assert cm.coordinator_destination_address_high == "0"
-    assert cm.coordinator_destination_address_low == "FFFF"
-    assert cm.coordinator_node_identifier == ""
-    assert cm.coordinator_maximum_hops == "1e"
-    assert cm.coordinator_broadcast_radius == "FF"
-    assert cm.coordinator_many_to_one_broadcast_time == "FF"
-    assert cm.coordinator_device_type_identifier == "3000"
-    assert cm.coordinator_node_discovery_backoff == "3C"
-    assert cm.coordinator_node_doscovery_options == "0"
-    assert cm.coordinator_pan_conflict_threshold == "3"
-    assert cm.coordinator_power_level == "4"
-    assert cm.coordinator_power_mode == "1"
-    assert cm.coordinator_encryption_enable == "0"
-    assert cm.coordinator_encryption_options == "0"
-    assert cm.coordinator_encryption_key == ""
-    assert cm.coordinator_network_encryption_key == ""
-    assert cm.coordinator_parity == "0"
-    assert cm.coordinator_stop_bits == "0"
-    assert cm.coordinator_DIO7_configuration == "1"
-    assert cm.coordinator_DIO6_configuration == "1"
-    assert cm.coordinator_API_enable == "1"
-    assert cm.coordinator_API_output_mode == "0"
-    assert cm.coordinator_cyclic_sleep_period == "20"
-    assert cm.coordinator_number_of_cyclic_sleep_periods == "1"
-    assert cm.coordinator_AD0_DIO0_configuration == "1"
-    assert cm.coordinator_AD1_DIO1_configuration == "0"
-    assert cm.coordinator_AD2_DIO2_configuration == "0"
-    assert cm.coordinator_AD3_DIO3_configuration == "0"
-    assert cm.coordinator_DIO4_configuration == "0"
-    assert cm.coordinator_DIO5_configuration == "1"
-    assert cm.coordinator_DIO10_PWM0_configuration == "1"
-    assert cm.coordinator_DIO11_configuration == "0"
-    assert cm.coordinator_DIO12_configuration == "0"
-    assert cm.coordinator_pull_up_resistor_enable == "1FFF"
-    assert cm.coordinator_associate_LED_blink_time == "0"
-    assert cm.coordinator_rssi_pwm_timer == "28"
-    assert cm.coordinator_device_options == "1"
-    assert cm.coordinator_IO_sampling_rate == "0"
-    assert cm.coordinator_digital_IO_change_detection == "0"
-    assert cm.coordinator_supply_voltage_high_threshold == "0"

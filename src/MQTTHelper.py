@@ -25,6 +25,8 @@ def connect(mqtt_broker, port):
 
     client.connect(mqtt_broker, port, 60)
 
+    client.topic_callback("test", on_message)
+
     # Blocking call that processes network traffic, dispatches callbacks and
     # handles reconnecting.
     # Other loop*() functions are available that give a threaded interface and

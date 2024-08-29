@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, Mock
-from XBeeDeviceManager import XBeeDeviceManager
+from XBee.XBeeDeviceManager import XBeeDeviceManager
 from digi.xbee.io import IOSample, IOLine
 from digi.xbee.devices import RemoteXBeeDevice
 

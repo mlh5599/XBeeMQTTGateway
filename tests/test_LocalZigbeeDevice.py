@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock, PropertyMock
-from LocalZigbeeDevice import SetNodeID, SetPanID, SetScanChannels, \
+from XBee.LocalZigbeeDevice import SetNodeID, SetPanID, SetScanChannels, \
     SetEncryptionOptions, GetEncryptionEnabled, SetZigbeeStackProfile, \
     SetNodeJoinTime
 

@@ -1,6 +1,6 @@
 from digi.xbee.devices import RemoteXBeeDevice
 from HomeAssistantAutoDiscovery import perform_auto_discovery
-from RemoteSensorDevice import ADCBinarySensorChannel, \
+from XBee.RemoteSensorDevice import ADCBinarySensorChannel, \
     RemoteIOSensorDevice
 from digi.xbee.io import IOSample
 import logging
